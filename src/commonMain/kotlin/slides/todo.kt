@@ -37,7 +37,7 @@ object MyStyleSheet : SpanStyleSheet() {
 }
 
 @Composable
-private fun Link(
+fun Link(
     text: String,
     url: String
 ) {
