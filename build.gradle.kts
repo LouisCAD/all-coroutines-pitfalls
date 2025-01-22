@@ -29,13 +29,13 @@ kotlin {
             implementation(cup.plugin.laser)
 
             // TODO: Select material or material3 (for composables such as Text).
-            implementation(compose.material)
-            implementation(cup.widgets.material)
-//            implementation(compose.material3)
-//            implementation(cup.widgets.material3)
+//            implementation(compose.material)
+//            implementation(cup.widgets.material)
+            implementation(compose.material3)
+            implementation(cup.widgets.material3)
 
-            implementation("org.kodein.emoji:emoji-compose-m2:2.1.0")
-//            implementation("org.kodein.emoji:emoji-compose-m3:2.0.1")
+//            implementation("org.kodein.emoji:emoji-compose-m2:2.1.0")
+            implementation("org.kodein.emoji:emoji-compose-m3:2.0.1")
         }
     }
 }
