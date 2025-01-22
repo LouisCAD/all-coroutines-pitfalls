@@ -1,3 +1,3 @@
 
 // TODO: Change the name of your project here
-rootProject.name = "cup-presentation-template"
+rootProject.name = "all-coroutines-pitfalls"
