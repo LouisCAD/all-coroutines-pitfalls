@@ -6,7 +6,7 @@ val defaultTextContentKind: TextContentKind = TextContentKind.BigFact //TODO
 interface SlidesBuilder {
 
     fun String.slide(
-        whatever: TextContentKind = defaultTextContentKind,
+        contentKind: TextContentKind = defaultTextContentKind,
         subtitle: String? = null
     )
 
@@ -17,6 +17,7 @@ interface SlidesBuilder {
 
     fun String.slide(
         disposition: Disposition = defaultDisposition,
+        startCentered: Boolean = false,
         block: SlideBuilder.() -> Unit
     )
 

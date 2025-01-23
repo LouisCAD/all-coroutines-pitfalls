@@ -17,7 +17,7 @@ private class CupSlidesBuilder : SlidesBuilder {
         TODO()
     }
 
-    override fun String.slide(whatever: TextContentKind, subtitle: String?) {
+    override fun String.slide(contentKind: TextContentKind, subtitle: String?) {
         TODO()
     }
 
@@ -25,7 +25,7 @@ private class CupSlidesBuilder : SlidesBuilder {
         TODO()
     }
 
-    override fun String.slide(disposition: Disposition, block: SlideBuilder.() -> Unit) {
+    override fun String.slide(disposition: Disposition, startCentered: Boolean, block: SlideBuilder.() -> Unit) {
         TODO()
     }
 
