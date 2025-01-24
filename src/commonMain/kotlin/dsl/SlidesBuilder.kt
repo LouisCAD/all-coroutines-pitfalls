@@ -1,8 +1,5 @@
 package dsl
 
-val defaultDisposition: Disposition = Disposition.List
-val defaultTextContentKind: TextContentKind = TextContentKind.BigFact //TODO
-
 abstract class SlidesBuilder {
 
     fun String.slide(
@@ -40,7 +37,7 @@ abstract class SlidesBuilder {
         block: SlidesBuilder.() -> Unit
     )
 
-    //region Implementation details
+    //region Implementation details ----------------------------------------
 
     protected abstract fun slide(
         title: String,
@@ -65,17 +62,4 @@ abstract class SlidesBuilder {
     )
 
     //endregion
-}
-
-interface SlideBuilder : SlideContentBuilder {
-    fun subtitle(text: String)
-}
-
-interface SlideContentBuilder {
-
-    operator fun String.invoke(
-        sideLabel: String? = null,
-        block: SlideContentBuilder.() -> Unit = {}
-    )
-
 }

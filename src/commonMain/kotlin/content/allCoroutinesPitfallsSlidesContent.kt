@@ -3,9 +3,9 @@ package slides
 import coroutinesQuickIntro
 import dsl.TextContentKind
 import pitfalls
-import slides
+import buildSlides
 
-fun allCoroutinesPitfallsSlidesContent() = slides {
+fun allCoroutinesPitfallsSlidesContent() = buildSlides {
     "All* coroutines pitfalls".slide(
         TextContentKind.PresentationOpening,
         subtitle = "Une présentation en franglais, proposée par Louis CAD"

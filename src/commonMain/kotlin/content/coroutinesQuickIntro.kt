@@ -14,7 +14,7 @@ fun SlidesBuilder.coroutinesQuickIntro() {
 private fun SlidesBuilder.definitions() {
     "Let's talk definitions".slidesGroup(
         slideContent = {
-            
+
         }
     ) {
         subtitle("To make sure we're on the same page")
