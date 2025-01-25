@@ -1,9 +1,9 @@
+import androidx.compose.foundation.layout.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dsl.SlidesBuilder
 import dsl.builder.SlidesDataBuilder
-import dsl.model.SlideContent
-import dsl.model.SlideContentItem
-import dsl.model.SlideData
-import dsl.model.Tree
+import dsl.model.*
 import net.kodein.cup.Slide
 import net.kodein.cup.SlideSpecs
 
@@ -15,14 +15,23 @@ fun buildSlides(
     return slidesMaker.buildSlides(SlidesDataBuilder().apply(builder).build())
 }
 
-val defaultCupSlidesMaker: CupSlidesMaker = object : CupSlidesMaker {
-    //TODO: When on the last step of a slide, show a hint (e.g. a camera emoji or icon),
-    // to let people know it's time to take a picture before the content goes away.
 
-    //TODO: Do a chapter closing
+val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
+    title = { parentTitles, slideTitle -> },
+    a = {}
+)
+
+private class DefaultCupSlidesMaker(
+    private val title: @Composable ColumnScope.(
+        parent: List<SlideTitle>,
+        SlideTitle?
+    ) -> Unit,
+    a: @Composable (step: Int) -> Unit,
+) : CupSlidesMaker {
     override fun buildSlides(data: List<SlideData>): List<Slide> = buildList {
         for (i in 0..data.lastIndex) {
             addSlide(
+                index = i,
                 data = data[i],
                 prev = data.getOrNull(i - 1),
                 next = data.getOrNull(i + 1),
@@ -30,21 +39,38 @@ val defaultCupSlidesMaker: CupSlidesMaker = object : CupSlidesMaker {
         }
     }
 
-    private fun MutableList<Slide>.addSlide(data: SlideData, prev: SlideData?, next: SlideData?) {
+    //TODO: When on the last step of a slide, show a hint (e.g. a camera emoji or icon),
+    // to let people know it's time to take a picture before the content goes away.
+
+    //TODO: Do a chapter closing
+    private fun MutableList<Slide>.addSlide(
+        index: Int,
+        data: SlideData,
+        prev: SlideData?,
+        next: SlideData?
+    ) {
         val stepCount: Int = when (data) {
             is SlideData.Comparison -> data.slides.sumOf { it.content.stepsCount() }
             is SlideData.TitleAndContent -> data.content.stepsCount()
         }
-        this += Slide(
-            name = "",
-            stepCount = stepCount,
-            specs = SlideSpecs()
-        ) { step ->
-            when (data) {
-                is SlideData.Comparison -> TODO()
-                is SlideData.Single -> TODO()
-                is SlideData.SubSlide -> TODO()
+        this += when (data) {
+            is SlideData.Comparison -> Slide(
+                name = data.currentTitle?.text ?: index.toString(),
+                stepCount = stepCount,
+                specs = SlideSpecs()
+            ) { step ->
+                Column(Modifier.fillMaxSize()) {
+                    title(data.parentTitles, data.currentTitle)
+                    Row(Modifier.fillMaxWidth().weight(1f)) {
+                        data.slides.forEachIndexed { index, subSlide ->
+                            //TODO: Map step depending on the delivery strategy.
+                            TODO()
+                        }
+                    }
+                }
             }
+            is SlideData.Single -> TODO()
+            is SlideData.SubSlide -> TODO()
         }
     }
 
