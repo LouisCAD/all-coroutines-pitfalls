@@ -64,6 +64,7 @@ abstract class SlidesBuilder {
     abstract fun comparison(
         title: String? = null,
         subtitle: String? = null,
+        titleOnlyForOverview: Boolean = false,
         block: SlidesBuilder.() -> Unit
     )
 

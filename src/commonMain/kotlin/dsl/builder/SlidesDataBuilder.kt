@@ -8,10 +8,11 @@ import dsl.model.*
 
 class SlidesDataBuilder private constructor(
     private val parentTitles: List<SlideTitle>,
-    private val slideDataList: MutableList<SlideData>
+    private val slideDataList: MutableList<SlideData>,
+    private val onNewTitle: (newTitle: String) -> Unit
 ): SlidesBuilder() {
 
-    constructor() : this(emptyList(), mutableListOf())
+    constructor() : this(emptyList(), mutableListOf(), {})
 
     fun build(): List<SlideData> = slideDataList.toList()
 
@@ -20,6 +21,7 @@ class SlidesDataBuilder private constructor(
         contentKind: TextContentKind,
         subtitle: String?
     ) {
+        onNewTitle(title)
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = SlideTitle(
@@ -40,6 +42,7 @@ class SlidesDataBuilder private constructor(
         startCentered: Boolean,
         block: SlideBuilder.() -> Unit
     ) {
+        if (title != null) onNewTitle(title)
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = title?.let {
@@ -65,6 +68,7 @@ class SlidesDataBuilder private constructor(
         subtitle: String?,
         groupContent: SlidesBuilder.() -> Unit
     ) {
+        onNewTitle(title)
         val slideTitle = SlideTitle(
             text = title,
             smallTitle = smallTitle,
@@ -77,7 +81,8 @@ class SlidesDataBuilder private constructor(
         )
         SlidesDataBuilder(
             parentTitles = parentTitles + slideTitle,
-            slideDataList = slideDataList
+            slideDataList = slideDataList,
+            onNewTitle = {}
         ).groupContent()
     }
 
@@ -88,45 +93,62 @@ class SlidesDataBuilder private constructor(
         subtitle: String?,
         groupContent: SlidesBuilder.() -> Unit
     ) {
+        onNewTitle(title)
         val slideTitle = SlideTitle(
             text = title,
             smallTitle = smallTitle,
             subtitle = subtitle
         )
-        val elements = mutableListOf<Tree<SlideContentItem>>()
+        val elements: MutableList<Tree<SlideContentItem>>?
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
-            content = disposition?.let {
-                SlideContent.Elements(
-                    disposition = it,
-                    elements = elements
-                )
+            content = when (disposition) {
+                null -> {
+                    elements = null
+                    null
+                }
+                else -> {
+                    elements = mutableListOf()
+                    SlideContent.Elements(
+                        disposition = disposition,
+                        elements = elements
+                    )
+                }
             } ?: SlideContent.SingleElement(TextContentKind.CenteredTitle)
         )
         SlidesDataBuilder(
             parentTitles = parentTitles + slideTitle,
-            slideDataList = slideDataList
+            slideDataList = slideDataList,
+            onNewTitle = { newTitle ->
+                elements?.add(createLeaf(SlideContentItem(text = newTitle, sideLabel = null)))
+            },
         ).groupContent()
     }
 
     override fun comparison(
         title: String?,
         subtitle: String?,
+        titleOnlyForOverview: Boolean,
         block: SlidesBuilder.() -> Unit
     ) {
-        val slideTitle = title?.let {
+        if (title != null) onNewTitle(title)
+        val slideTitle = if (titleOnlyForOverview.not()) title?.let {
             SlideTitle(
                 text = it,
                 smallTitle = null,
                 subtitle = subtitle
             )
-        }
+        } else null
         slideDataList += SlideData.Comparison(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
-            slides = TODO()
+            slides = TODO("Create a super common interface for slides without group support")
         )
-        TODO()
+    }
+
+    private fun <T> createLeaf(data: T): Tree<T> = object : Tree<T> {
+        override val data: T = data
+        override val nodes: List<Tree<T>> get() = emptyList()
     }
 }
