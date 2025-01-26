@@ -1,39 +1,6 @@
 package dsl
 
-abstract class SlidesBuilder {
-
-    fun String.slide(
-        contentKind: TextContentKind = defaultTextContentKind,
-        subtitle: String? = null
-    ) = slideWithTextContent(
-        title = this,
-        contentKind = contentKind,
-        subtitle = subtitle
-    )
-
-    fun slide(
-        disposition: Disposition = defaultDisposition,
-        block: SlideBuilder.() -> Unit
-    ) = slideWithTextTree(
-        title = null,
-        subtitle = null,
-        disposition = disposition,
-        startCentered = false,
-        block = block
-    )
-
-    fun String.slide(
-        disposition: Disposition = defaultDisposition,
-        subtitle: String? = null,
-        startCentered: Boolean = false,
-        block: SlideBuilder.() -> Unit
-    ) = slideWithTextTree(
-        title = this,
-        disposition = disposition,
-        subtitle = subtitle,
-        startCentered = startCentered,
-        block = block
-    )
+abstract class SlidesBuilder : SubSlidesBuilder() {
 
     fun String.slidesGroup(
         disposition: TextContentKind,
@@ -65,23 +32,7 @@ abstract class SlidesBuilder {
         title: String? = null,
         subtitle: String? = null,
         titleOnlyForOverview: Boolean = false,
-        block: SlidesBuilder.() -> Unit
-    )
-
-    //region Implementation details ----------------------------------------
-
-    protected abstract fun slideWithTextContent(
-        title: String,
-        contentKind: TextContentKind,
-        subtitle: String? = null
-    )
-
-    protected abstract fun slideWithTextTree(
-        title: String?,
-        subtitle: String?,
-        disposition: Disposition,
-        startCentered: Boolean,
-        block: SlideBuilder.() -> Unit
+        block: SubSlidesBuilder.() -> Unit
     )
 
     protected abstract fun slidesGroupWithTextContent(
@@ -99,6 +50,4 @@ abstract class SlidesBuilder {
         subtitle: String?,
         groupContent: SlidesBuilder.() -> Unit
     )
-
-    //endregion
 }

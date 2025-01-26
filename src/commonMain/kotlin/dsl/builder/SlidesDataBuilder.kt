@@ -1,9 +1,6 @@
 package dsl.builder
 
-import dsl.Disposition
-import dsl.SlideBuilder
-import dsl.SlidesBuilder
-import dsl.TextContentKind
+import dsl.*
 import dsl.model.*
 
 class SlidesDataBuilder private constructor(
@@ -130,7 +127,7 @@ class SlidesDataBuilder private constructor(
         title: String?,
         subtitle: String?,
         titleOnlyForOverview: Boolean,
-        block: SlidesBuilder.() -> Unit
+        block: SubSlidesBuilder.() -> Unit
     ) {
         if (title != null) onNewTitle(title)
         val slideTitle = if (titleOnlyForOverview.not()) title?.let {
