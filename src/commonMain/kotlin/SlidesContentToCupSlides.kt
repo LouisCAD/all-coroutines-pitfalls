@@ -17,7 +17,9 @@ fun buildSlides(
 
 
 val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
-    title = { parentTitles, slideTitle -> },
+    title = { parentTitles, slideTitle ->
+        TODO()
+    },
     a = {}
 )
 
@@ -55,7 +57,7 @@ private class DefaultCupSlidesMaker(
         }
         this += when (data) {
             is SlideData.Comparison -> Slide(
-                name = data.currentTitle?.text ?: index.toString(),
+                name = data.slideName(index),
                 stepCount = stepCount,
                 specs = SlideSpecs()
             ) { step ->
@@ -69,15 +71,29 @@ private class DefaultCupSlidesMaker(
                     }
                 }
             }
-            is SlideData.Single -> TODO()
-            is SlideData.SubSlide -> TODO()
+            is SlideData.Single -> Slide(
+                name = data.slideName(index),
+                stepCount = stepCount,
+                specs = SlideSpecs()
+            ) { step ->
+                TODO()
+            }
+            is SlideData.SubSlide -> Slide(
+                name = data.slideName(index),
+                stepCount = stepCount,
+                specs = SlideSpecs()
+            ) { step ->
+                TODO()
+            }
         }
     }
 
 }
 
+private fun SlideData.slideName(index: Int): String = currentTitle?.smallTitle ?: index.toString()
+
 private fun SlideContent.stepsCount(): Int = when (this) {
-    is SlideContent.Elements -> this.tree.countSteps()
+    is SlideContent.Elements -> this.elements.sumOf { it.countSteps() }
     is SlideContent.SingleElement -> 0
 }
 

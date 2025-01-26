@@ -1,5 +1,9 @@
 package dsl
 
-interface SlideBuilder : SlideContentBuilder {
-    fun subtitle(text: String)
+interface SlideBuilder {
+
+    operator fun String.invoke(
+        sideLabel: String? = null,
+        block: SlideBuilder.() -> Unit = {}
+    )
 }

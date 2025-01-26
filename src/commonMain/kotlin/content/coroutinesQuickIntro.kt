@@ -1,4 +1,3 @@
-import dsl.Disposition
 import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
 import dsl.TextContentKind
@@ -13,11 +12,8 @@ fun SlidesBuilder.coroutinesQuickIntro() {
 
 private fun SlidesBuilder.definitions() {
     "Let's talk definitions".slidesGroup(
-        slideContent = {
-
-        }
+        subtitle = "To make sure we're on the same page",
     ) {
-        subtitle("To make sure we're on the same page")
         "What is a coroutine?".slide(Bullets) {
             "co-routine = cooperative routine" {
                 "routine : some code (i.e. a function) being executed"()
@@ -62,9 +58,13 @@ private fun SlidesBuilder.whyUseCoroutines() {
 }
 
 private fun SlidesBuilder.quickCoroutinesBasics() {
-    "Basics in 5 minutes".slidesGroup(smallTitle = "Basics") {
-        subtitle("Before showing you all the wrong ways, let's try an attempt at showing you the right way")
-        "suspend functions".slidesGroup(Bullets) {
+    "Basics in 5 minutes".slidesGroup(
+        smallTitle = "Basics",
+        subtitle = "Before showing you all the wrong ways, let's try an attempt at showing you the right way",
+    ) {
+        "suspend functions".slidesGroup(
+            disposition = Bullets,
+        ) {
             "What they look like".slide {
                 "They have the **suspend** modifier"()
                 //TODO: have a bunch of suspend function signatures pop-up, with redacted bodies (or not, for very short ones?)
@@ -74,13 +74,13 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
                     "cancelled"(sideLabel = "More on that later…")
                 }
             }
-            "How they work" {
+            "How they work".slide {
                 "They are compiled to normal functions…"()
                 "They are compiled to normal functions…"()
             }
             ""
         }
-        "suspend funs' hidden power" {
+        "suspend funs' hidden power".slide {
             "cancellation"()
         }
     }

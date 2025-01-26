@@ -1,7 +1,5 @@
-import dsl.Disposition
 import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
-import dsl.TextContentKind
 
 fun SlidesBuilder.pitfalls() {
     kindsOfPitfalls(startCentered = true)

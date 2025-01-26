@@ -7,7 +7,7 @@ sealed interface SlideContent {
 
     data class Elements(
         val disposition: Disposition,
-        val tree: Tree<SlideContentItem>
+        val elements: List<Tree<SlideContentItem>>
     ) : SlideContent
 
     data class SingleElement(

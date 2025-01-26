@@ -1,6 +1,6 @@
 package dsl.model
 
-class Tree<T>(
-    val data: T,
+interface Tree<out T> {
+    val data: T
     val nodes: List<Tree<T>>
-)
+}
