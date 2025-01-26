@@ -137,10 +137,13 @@ class SlidesDataBuilder private constructor(
                 subtitle = subtitle
             )
         } else null
+        val subSlidesBuilder = SubSlidesDataBuilder(
+            //TODO: Add necessary stuff, if any
+        )
         slideDataList += SlideData.Comparison(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
-            slides = TODO("Create a super common interface for slides without group support")
+            slides = subSlidesBuilder.build()
         )
     }
 
