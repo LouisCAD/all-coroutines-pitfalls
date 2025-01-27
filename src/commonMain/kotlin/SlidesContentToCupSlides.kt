@@ -1,12 +1,15 @@
-import androidx.collection.*
+import androidx.collection.MutableIntList
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
+import dsl.Disposition
 import dsl.SideBySideDelivery
 import dsl.SlidesBuilder
+import dsl.TextContentKind
 import dsl.builder.SlidesDataBuilder
 import dsl.model.*
 import net.kodein.cup.Slide
@@ -20,13 +23,28 @@ fun buildSlides(
     return slidesMaker.buildSlides(SlidesDataBuilder().apply(builder).build())
 }
 
+val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
+    title = { parentTitles, slideTitle ->
+        Title(parentTitles = parentTitles, slideTitle = slideTitle)
+    },
+    body = { parentTitles, currentTitle, content, step ->
+        Body(
+            modifier = Modifier.fillMaxWidth().weight(1f),
+            parentTitles = parentTitles,
+            currentTitle = currentTitle,
+            content = content,
+            step = step
+        )
+    }
+)
+
 @Composable
 private fun Title(
     parentTitles: List<SlideTitle>,
     slideTitle: SlideTitle?
 ) = Column(
-    modifier = Modifier.fillMaxWidth().padding(16.dp),
-    verticalArrangement = Arrangement.spacedBy(32.dp)
+    modifier = Modifier.fillMaxWidth(),
+    verticalArrangement = Arrangement.spacedBy(16.dp)
 ) {
     if (parentTitles.isNotEmpty()) {
         val text = parentTitles.joinToString(separator = " > ") {
@@ -34,9 +52,10 @@ private fun Title(
         }
         Text(
             text = text,
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.titleSmall
         )
     }
+//    Box(Modifier.fillMaxWidth().height(16.dp).background(Color.Yellow))
     slideTitle?.let {
         Text(text = it.text, style = MaterialTheme.typography.displayLarge)
         it.subtitle?.let { text ->
@@ -47,30 +66,80 @@ private fun Title(
 
 @Composable
 private fun Body(
+    modifier: Modifier,
     parentTitles: List<SlideTitle>?,
     currentTitle: SlideTitle?,
     content: SlideContent,
     step: Int
 ) {
-    Text("Step: $step")
+    when (content) {
+        is SlideContent.Elements -> Column(modifier) {
+            ContentItems(
+                disposition = content.disposition,
+                items = content.elements,
+                step = step
+            )
+        }
+        is SlideContent.SingleElement -> Box(modifier) {
+            val textStyle = when (content.contentKind) {
+                TextContentKind.BigFact -> MaterialTheme.typography.displayLarge
+                TextContentKind.CenteredTitle -> MaterialTheme.typography.displayLarge
+                TextContentKind.NewSection -> MaterialTheme.typography.displayLarge
+                TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
+            }
+            currentTitle?.let {
+                Text(it.text, style = textStyle)
+            }
+        }
+    }
 }
 
-
-val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
-    title = { parentTitles, slideTitle ->
-        Title(parentTitles = parentTitles, slideTitle = slideTitle)
-    },
-    body = { parentTitles, currentTitle, content, step ->
-        Body(parentTitles = parentTitles, currentTitle = currentTitle, content = content, step = step)
-    }
+@Composable
+private fun ContentItems(
+    disposition: Disposition,
+    items: List<Tree<SlideContentItem>>,
+    step: Int
+) = ContentItems(
+    disposition = disposition,
+    items = items,
+    depth = 0,
+    stepIndexOffset = 0,
+    step = step
 )
+
+@Composable
+private fun ContentItems(
+    disposition: Disposition,
+    items: List<Tree<SlideContentItem>>,
+    depth: Int,
+    stepIndexOffset: Int,
+    step: Int
+): Int {
+    var index = stepIndexOffset
+    items.forEach { tree ->
+        val visible = step >= index
+        Text(
+            text = tree.data.text,
+            modifier = Modifier.alpha(if (visible) 1f else 0.3f).padding(start = 16.dp * depth)
+        )
+        index++
+        index += ContentItems(
+            disposition = disposition,
+            items = tree.nodes,
+            depth = depth + 1,
+            stepIndexOffset = index,
+            step = step
+        )
+    }
+    return index - stepIndexOffset
+}
 
 private class DefaultCupSlidesMaker(
     private val title: @Composable ColumnScope.(
         parent: List<SlideTitle>,
         SlideTitle?
     ) -> Unit,
-    private val body: @Composable (
+    private val body: @Composable ColumnScope.(
         parentTitles: List<SlideTitle>?,
         currentTitle: SlideTitle?,
         content: SlideContent,
@@ -133,7 +202,9 @@ private class DefaultCupSlidesMaker(
                 specs = SlideSpecs()
             ) { step ->
                 Column(Modifier.fillMaxSize()) {
-                    title(data.parentTitles, data.currentTitle)
+                    if (data.content !is SlideContent.SingleElement) {
+                        title(data.parentTitles, data.currentTitle)
+                    }
                     body(data.parentTitles, data.currentTitle, data.content, step - 1)
                 }
             }

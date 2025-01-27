@@ -20,6 +20,6 @@ class SlideContentItemBuilder(
             ),
             nodes = newList
         )
-        SlideContentItemBuilder(newList).block()
+        SlideContentItemBuilder(trees = newList).block()
     }
 }

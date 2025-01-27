@@ -5,7 +5,9 @@ interface Tree<out T> {
     val nodes: List<Tree<T>>
 }
 
-fun <T> Tree(data: T, nodes: List<Tree<T>>): Tree<T> = object : Tree<T> {
-    override val data: T = data
-    override val nodes: List<Tree<T>> = nodes
-}
+fun <T> Tree(data: T, nodes: List<Tree<T>>): Tree<T> = TreeImpl(data, nodes)
+
+data class TreeImpl<T>(
+    override val data: T,
+    override val nodes: List<Tree<T>>
+) : Tree<T>
