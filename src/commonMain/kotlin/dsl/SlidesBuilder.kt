@@ -3,7 +3,7 @@ package dsl
 abstract class SlidesBuilder : SubSlidesBuilder() {
 
     fun String.slidesGroup(
-        disposition: TextContentKind,
+        disposition: TextContentKind = TextContentKind.NewSection,
         smallTitle: String? = null,
         subtitle: String? = null,
         groupContent: SlidesBuilder.() -> Unit
@@ -16,7 +16,7 @@ abstract class SlidesBuilder : SubSlidesBuilder() {
     )
 
     fun String.slidesGroup(
-        disposition: Disposition? = null,
+        disposition: Disposition,
         smallTitle: String? = null,
         subtitle: String? = null,
         groupContent: SlidesBuilder.() -> Unit
@@ -45,7 +45,7 @@ abstract class SlidesBuilder : SubSlidesBuilder() {
 
     protected abstract fun slidesGroupWithTextTree(
         title: String,
-        disposition: Disposition?,
+        disposition: Disposition,
         smallTitle: String?,
         subtitle: String?,
         groupContent: SlidesBuilder.() -> Unit

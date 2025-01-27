@@ -70,7 +70,7 @@ class SlidesDataBuilder private constructor(
 
     override fun slidesGroupWithTextTree(
         title: String,
-        disposition: Disposition?,
+        disposition: Disposition,
         smallTitle: String?,
         subtitle: String?,
         groupContent: SlidesBuilder.() -> Unit
@@ -81,29 +81,20 @@ class SlidesDataBuilder private constructor(
             smallTitle = smallTitle,
             subtitle = subtitle
         )
-        val elements: MutableList<Tree<SlideContentItem>>?
+        val elements = mutableListOf<Tree<SlideContentItem>>()
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
-            content = when (disposition) {
-                null -> {
-                    elements = null
-                    null
-                }
-                else -> {
-                    elements = mutableListOf()
-                    SlideContent.Elements(
-                        disposition = disposition,
-                        elements = elements
-                    )
-                }
-            } ?: SlideContent.SingleElement(TextContentKind.CenteredTitle)
+            content = SlideContent.Elements(
+                disposition = disposition,
+                elements = elements
+            )
         )
         SlidesDataBuilder(
             parentTitles = parentTitles + slideTitle,
             slideDataList = slideDataList,
             onNewTitle = { newTitle ->
-                elements?.add(Tree(SlideContentItem(text = newTitle, sideLabel = null), emptyList()))
+                elements.add(Tree(SlideContentItem(text = newTitle, sideLabel = null), emptyList()))
             },
         ).groupContent()
     }

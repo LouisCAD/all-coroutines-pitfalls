@@ -1,11 +1,5 @@
 package dsl.model
 
-data class SlideDataOld(
-    val parentTitles: List<SlideTitle>,
-    val currentTitle: SlideTitle?,
-    val content: SlideContent
-)
-
 sealed interface SlideData {
     val currentTitle: SlideTitle?
 
