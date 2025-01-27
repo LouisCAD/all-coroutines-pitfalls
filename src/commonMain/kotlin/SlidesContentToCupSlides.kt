@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
@@ -55,7 +56,6 @@ private fun Title(
             style = MaterialTheme.typography.titleSmall
         )
     }
-//    Box(Modifier.fillMaxWidth().height(16.dp).background(Color.Yellow))
     slideTitle?.let {
         Text(text = it.text, style = MaterialTheme.typography.displayLarge)
         it.subtitle?.let { text ->
@@ -88,7 +88,7 @@ private fun Body(
                 TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
             }
             currentTitle?.let {
-                Text(it.text, style = textStyle)
+                Text(it.text, Modifier.align(Alignment.Center), style = textStyle)
             }
         }
     }
@@ -120,7 +120,7 @@ private fun ContentItems(
         val visible = step >= index
         Text(
             text = tree.data.text,
-            modifier = Modifier.alpha(if (visible) 1f else 0.3f).padding(start = 16.dp * depth)
+            modifier = Modifier.alpha(if (visible) 1f else 0.05f).padding(start = 16.dp * depth)
         )
         index++
         index += ContentItems(
