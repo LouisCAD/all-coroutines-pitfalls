@@ -1,7 +1,10 @@
 import androidx.collection.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dsl.SideBySideDelivery
 import dsl.SlidesBuilder
 import dsl.builder.SlidesDataBuilder
@@ -17,13 +20,48 @@ fun buildSlides(
     return slidesMaker.buildSlides(SlidesDataBuilder().apply(builder).build())
 }
 
+@Composable
+private fun Title(
+    parentTitles: List<SlideTitle>,
+    slideTitle: SlideTitle?
+) = Column(
+    modifier = Modifier.fillMaxWidth().padding(64.dp),
+    verticalArrangement = Arrangement.spacedBy(32.dp)
+) {
+    if (parentTitles.isNotEmpty()) {
+        val text = parentTitles.joinToString(separator = " > ") {
+            it.smallTitle ?: it.text
+        }
+        Text(
+            text = text,
+            style = MaterialTheme.typography.displaySmall
+        )
+    }
+    slideTitle?.let {
+        Text(text = it.text, style = MaterialTheme.typography.displayLarge)
+        it.subtitle?.let { text ->
+            Text(text = text, style = MaterialTheme.typography.displayMedium)
+        }
+    }
+}
+
+@Composable
+private fun Body(
+    parentTitles: List<SlideTitle>?,
+    currentTitle: SlideTitle?,
+    content: SlideContent,
+    step: Int
+) {
+    Text("Step: $step")
+}
+
 
 val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
     title = { parentTitles, slideTitle ->
-        TODO()
+        Title(parentTitles = parentTitles, slideTitle = slideTitle)
     },
     body = { parentTitles, currentTitle, content, step ->
-        TODO()
+        Body(parentTitles = parentTitles, currentTitle = currentTitle, content = content, step = step)
     }
 )
 
@@ -88,7 +126,10 @@ private class DefaultCupSlidesMaker(
                 stepCount = data.content.stepsCount() + 1,
                 specs = SlideSpecs()
             ) { step ->
-                body(data.parentTitles, data.currentTitle, data.content, step - 1)
+                Column(Modifier.fillMaxSize()) {
+                    title(data.parentTitles, data.currentTitle)
+                    body(data.parentTitles, data.currentTitle, data.content, step - 1)
+                }
             }
         }
     }
