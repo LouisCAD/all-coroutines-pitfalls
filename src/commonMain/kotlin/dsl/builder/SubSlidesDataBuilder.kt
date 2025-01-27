@@ -4,7 +4,7 @@ import dsl.Disposition
 import dsl.SlideBuilder
 import dsl.SubSlidesBuilder
 import dsl.TextContentKind
-import dsl.model.SlideData
+import dsl.model.*
 
 class SubSlidesDataBuilder(
     private val slideDataList: MutableList<SlideData.SubSlide>,
@@ -19,7 +19,16 @@ class SubSlidesDataBuilder(
         contentKind: TextContentKind,
         subtitle: String?
     ) {
-        TODO()
+        slideDataList += SlideData.SubSlide(
+            currentTitle = SlideTitle(
+                text = title,
+                smallTitle = null,
+                subtitle = subtitle
+            ),
+            content = SlideContent.SingleElement(
+                contentKind = contentKind
+            )
+        )
     }
 
     override fun slideWithTextTree(
@@ -29,6 +38,9 @@ class SubSlidesDataBuilder(
         startCentered: Boolean,
         block: SlideBuilder.() -> Unit
     ) {
-        TODO()
+        slideDataList += SlideData.SubSlide(
+            currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
+            content = slideContentElements(disposition, block)
+        )
     }
 }

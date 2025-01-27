@@ -40,21 +40,11 @@ class SlidesDataBuilder private constructor(
         block: SlideBuilder.() -> Unit
     ) {
         if (title != null) onNewTitle(title)
+        @Suppress("DuplicatedCode") // Different constructor calls.
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
-            currentTitle = title?.let {
-                SlideTitle(
-                    text = it,
-                    smallTitle = null,
-                    subtitle = subtitle
-                )
-            },
-            content = SlideContent.Elements(
-                disposition = disposition,
-                elements = mutableListOf<Tree<SlideContentItem>>().also { trees ->
-                    SlideContentItemBuilder(trees = trees).block()
-                }
-            )
+            currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
+            content = slideContentElements(disposition, block)
         )
     }
 
@@ -66,11 +56,7 @@ class SlidesDataBuilder private constructor(
         groupContent: SlidesBuilder.() -> Unit
     ) {
         onNewTitle(title)
-        val slideTitle = SlideTitle(
-            text = title,
-            smallTitle = smallTitle,
-            subtitle = subtitle
-        )
+        val slideTitle = SlideTitle(text = title, smallTitle = smallTitle, subtitle = subtitle)
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
@@ -130,13 +116,11 @@ class SlidesDataBuilder private constructor(
         block: SubSlidesBuilder.() -> Unit
     ) {
         if (title != null) onNewTitle(title)
-        val slideTitle = if (titleOnlyForOverview.not()) title?.let {
-            SlideTitle(
-                text = it,
-                smallTitle = null,
-                subtitle = subtitle
-            )
-        } else null
+
+        val slideTitle = if (titleOnlyForOverview.not()) slideTitleOrNull(
+            title = title,
+            subtitle = subtitle
+        ) else null
         val subSlidesBuilder = SubSlidesDataBuilder(
             //TODO: Add necessary stuff, if any
         )
