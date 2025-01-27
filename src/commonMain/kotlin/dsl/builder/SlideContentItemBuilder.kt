@@ -1,19 +1,19 @@
 package dsl.builder
 
 import dsl.SlideBuilder
-import dsl.model.MutableTree
 import dsl.model.SlideContentItem
+import dsl.model.Tree
 
 class SlideContentItemBuilder(
-    private val trees: MutableList<MutableTree<SlideContentItem>> = mutableListOf()
+    private val trees: MutableList<Tree<SlideContentItem>> = mutableListOf()
 ) : SlideBuilder {
 
     override fun String.invoke(
         sideLabel: String?,
         block: SlideBuilder.() -> Unit
     ) {
-        val newList = mutableListOf<MutableTree<SlideContentItem>>()
-        trees += MutableTreeImpl(
+        val newList = mutableListOf<Tree<SlideContentItem>>()
+        trees += TreeImpl(
             data = SlideContentItem(
                 text = this,
                 sideLabel = sideLabel
@@ -24,7 +24,7 @@ class SlideContentItemBuilder(
     }
 }
 
-private class MutableTreeImpl<T>(
+private class TreeImpl<T>(
     override var data: T,
-    override val nodes: MutableList<MutableTree<T>>
-) : MutableTree<T>
+    override val nodes: MutableList<Tree<T>>
+) : Tree<T>

@@ -51,8 +51,8 @@ class SlidesDataBuilder private constructor(
             },
             content = SlideContent.Elements(
                 disposition = disposition,
-                elements = mutableListOf<MutableTree<SlideContentItem>>().also { list ->
-                    SlideContentItemBuilder(list).block()
+                elements = mutableListOf<Tree<SlideContentItem>>().also { trees ->
+                    SlideContentItemBuilder(trees = trees).block()
                 }
             )
         )
