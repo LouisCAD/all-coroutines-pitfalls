@@ -8,5 +8,5 @@ interface CupSlidesMaker {
      * so implementations can leverage the context of previous and next slide
      * data elements to create the final set of CuP slides.
      */
-    fun buildSlides(data: List<SlideData>): List<Slide>
+    fun buildSlides(data: List<SlideData.TopLevel>): List<Slide>
 }

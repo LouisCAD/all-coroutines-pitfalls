@@ -5,13 +5,13 @@ import dsl.model.*
 
 class SlidesDataBuilder private constructor(
     private val parentTitles: List<SlideTitle>,
-    private val slideDataList: MutableList<SlideData>,
+    private val slideDataList: MutableList<SlideData.TopLevel>,
     private val onNewTitle: (newTitle: String) -> Unit
 ): SlidesBuilder() {
 
     constructor() : this(emptyList(), mutableListOf(), {})
 
-    fun build(): List<SlideData> = slideDataList.toList()
+    fun build(): List<SlideData.TopLevel> = slideDataList.toList()
 
     override fun slideWithTextContent(
         title: String,

@@ -20,7 +20,9 @@ val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
     title = { parentTitles, slideTitle ->
         TODO()
     },
-    a = {}
+    body = { parentTitles, currentTitle, content, step ->
+        TODO()
+    }
 )
 
 private class DefaultCupSlidesMaker(
@@ -28,9 +30,14 @@ private class DefaultCupSlidesMaker(
         parent: List<SlideTitle>,
         SlideTitle?
     ) -> Unit,
-    a: @Composable (step: Int) -> Unit,
+    private val body: @Composable (
+        parentTitles: List<SlideTitle>?,
+        currentTitle: SlideTitle?,
+        content: SlideContent,
+        step: Int
+    ) -> Unit,
 ) : CupSlidesMaker {
-    override fun buildSlides(data: List<SlideData>): List<Slide> = buildList {
+    override fun buildSlides(data: List<SlideData.TopLevel>): List<Slide> = buildList {
         for (i in 0..data.lastIndex) {
             addSlide(
                 index = i,
@@ -47,7 +54,7 @@ private class DefaultCupSlidesMaker(
     //TODO: Do a chapter closing
     private fun MutableList<Slide>.addSlide(
         index: Int,
-        data: SlideData,
+        data: SlideData.TopLevel,
         prev: SlideData?,
         next: SlideData?
     ) {
@@ -65,8 +72,8 @@ private class DefaultCupSlidesMaker(
                     title(data.parentTitles, data.currentTitle)
                     Row(Modifier.fillMaxWidth().weight(1f)) {
                         data.slides.forEachIndexed { index, subSlide ->
-                            //TODO: Map step depending on the delivery strategy.
-                            TODO()
+                            val actualStep = 0 //TODO: Map step depending on the delivery strategy.
+                            body(null, subSlide.currentTitle, subSlide.content, actualStep)
                         }
                     }
                 }
@@ -76,18 +83,10 @@ private class DefaultCupSlidesMaker(
                 stepCount = stepCount,
                 specs = SlideSpecs()
             ) { step ->
-                TODO()
-            }
-            is SlideData.SubSlide -> Slide(
-                name = data.slideName(index),
-                stepCount = stepCount,
-                specs = SlideSpecs()
-            ) { step ->
-                TODO()
+                body(data.parentTitles, data.currentTitle, data.content, step)
             }
         }
     }
-
 }
 
 private fun SlideData.slideName(index: Int): String = currentTitle?.smallTitle ?: index.toString()

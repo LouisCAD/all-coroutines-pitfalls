@@ -7,7 +7,7 @@ sealed interface SlideData {
         override val parentTitles: List<SlideTitle>,
         override val currentTitle: SlideTitle?,
         override val content: SlideContent
-    ) : SlideData, WithParentTitles, TitleAndContent
+    ) : SlideData, TopLevel, WithParentTitles, TitleAndContent
 
     data class SubSlide(
         override val currentTitle: SlideTitle?,
@@ -18,7 +18,7 @@ sealed interface SlideData {
         override val parentTitles: List<SlideTitle>,
         override val currentTitle: SlideTitle?,
         val slides: List<SubSlide>
-    ) : SlideData, WithParentTitles
+    ) : SlideData, TopLevel, WithParentTitles
 
     sealed interface WithParentTitles : SlideData {
         val parentTitles: List<SlideTitle>
@@ -28,4 +28,6 @@ sealed interface SlideData {
         override val currentTitle: SlideTitle?
         val content: SlideContent
     }
+
+    sealed interface TopLevel : SlideData
 }
