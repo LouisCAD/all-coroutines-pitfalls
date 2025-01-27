@@ -99,22 +99,18 @@ class SlidesDataBuilder private constructor(
         ).groupContent()
     }
 
-    override fun comparison(
+    override fun sideBySide(
         title: String?,
         subtitle: String?,
-        titleOnlyForOverview: Boolean,
+        overviewTitle: String?,
+        delivery: SideBySideDelivery,
         block: SubSlidesBuilder.() -> Unit
     ) {
-        if (title != null) onNewTitle(title)
-
-        val slideTitle = if (titleOnlyForOverview.not()) slideTitleOrNull(
-            title = title,
-            subtitle = subtitle
-        ) else null
+        if (overviewTitle != null) onNewTitle(overviewTitle)
         val subSlidesBuilder = SubSlidesDataBuilder()
         slideDataList += SlideData.Comparison(
             parentTitles = parentTitles,
-            currentTitle = slideTitle,
+            currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
             slides = subSlidesBuilder.build()
         )
     }

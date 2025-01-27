@@ -1,9 +1,7 @@
-package slides
+package content
 
-import coroutinesQuickIntro
-import dsl.TextContentKind
-import pitfalls
 import buildSlides
+import dsl.TextContentKind
 
 fun allCoroutinesPitfallsSlidesContent() = buildSlides {
     "All* coroutines pitfalls".slide(

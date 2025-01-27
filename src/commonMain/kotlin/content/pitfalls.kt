@@ -1,3 +1,5 @@
+package content
+
 import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
 

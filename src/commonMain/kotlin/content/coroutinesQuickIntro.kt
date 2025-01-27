@@ -1,4 +1,7 @@
+package content
+
 import dsl.Disposition.Bullets
+import dsl.SideBySideDelivery
 import dsl.SlidesBuilder
 import dsl.TextContentKind
 
@@ -11,7 +14,7 @@ fun SlidesBuilder.coroutinesQuickIntro() {
 }
 
 private fun SlidesBuilder.definitions() {
-    "Let's talk definitions".slidesGroup(
+    "Let's talk content.definitions".slidesGroup(
         subtitle = "To make sure we're on the same page",
     ) {
         "What is a coroutine?".slide(Bullets) {
@@ -21,7 +24,7 @@ private fun SlidesBuilder.definitions() {
             "Coroutines cooperate to run without blocking each other"()
             "It's a suspendable function, while it's being run"()
         }
-        comparison {
+        sideBySide(delivery = SideBySideDelivery.PerLine) {
             "routine".slide(Bullets) {
                 "The calling thread is blocked/monopolized until it's done" {
                     "Callbacks are required for asynchronous operations"()

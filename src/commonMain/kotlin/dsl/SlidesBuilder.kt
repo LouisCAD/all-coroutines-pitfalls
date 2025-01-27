@@ -28,10 +28,11 @@ abstract class SlidesBuilder : SubSlidesBuilder() {
         groupContent = groupContent
     )
 
-    abstract fun comparison(
+    abstract fun sideBySide(
         title: String? = null,
         subtitle: String? = null,
-        titleOnlyForOverview: Boolean = false,
+        overviewTitle: String? = title,
+        delivery: SideBySideDelivery = SideBySideDelivery.PageByPage,
         block: SubSlidesBuilder.() -> Unit
     )
 
