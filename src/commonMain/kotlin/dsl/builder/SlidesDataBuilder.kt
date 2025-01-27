@@ -40,7 +40,6 @@ class SlidesDataBuilder private constructor(
         block: SlideBuilder.() -> Unit
     ) {
         if (title != null) onNewTitle(title)
-        @Suppress("DuplicatedCode") // Different constructor calls.
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
@@ -104,7 +103,7 @@ class SlidesDataBuilder private constructor(
             parentTitles = parentTitles + slideTitle,
             slideDataList = slideDataList,
             onNewTitle = { newTitle ->
-                elements?.add(createLeaf(SlideContentItem(text = newTitle, sideLabel = null)))
+                elements?.add(Tree(SlideContentItem(text = newTitle, sideLabel = null), emptyList()))
             },
         ).groupContent()
     }
@@ -121,18 +120,11 @@ class SlidesDataBuilder private constructor(
             title = title,
             subtitle = subtitle
         ) else null
-        val subSlidesBuilder = SubSlidesDataBuilder(
-            //TODO: Add necessary stuff, if any
-        )
+        val subSlidesBuilder = SubSlidesDataBuilder()
         slideDataList += SlideData.Comparison(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
             slides = subSlidesBuilder.build()
         )
-    }
-
-    private fun <T> createLeaf(data: T): Tree<T> = object : Tree<T> {
-        override val data: T = data
-        override val nodes: List<Tree<T>> get() = emptyList()
     }
 }

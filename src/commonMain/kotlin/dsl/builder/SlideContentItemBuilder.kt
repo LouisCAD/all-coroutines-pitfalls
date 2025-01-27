@@ -13,7 +13,7 @@ class SlideContentItemBuilder(
         block: SlideBuilder.() -> Unit
     ) {
         val newList = mutableListOf<Tree<SlideContentItem>>()
-        trees += TreeImpl(
+        trees += Tree(
             data = SlideContentItem(
                 text = this,
                 sideLabel = sideLabel
@@ -23,8 +23,3 @@ class SlideContentItemBuilder(
         SlideContentItemBuilder(newList).block()
     }
 }
-
-private class TreeImpl<T>(
-    override var data: T,
-    override val nodes: MutableList<Tree<T>>
-) : Tree<T>
