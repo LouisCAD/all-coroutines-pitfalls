@@ -60,33 +60,32 @@ private class DefaultCupSlidesMaker(
         prev: SlideData?,
         next: SlideData?
     ) {
-        val stepCount: Int = when (data) {
-            is SlideData.SideBySide -> data.slides.sumOf { it.content.stepsCount() }
-            is SlideData.TitleAndContent -> data.content.stepsCount()
-        }
         this += when (data) {
-            is SlideData.SideBySide -> Slide(
-                name = data.slideName(index),
-                stepCount = stepCount,
-                specs = SlideSpecs()
-            ) { step ->
-                Column(Modifier.fillMaxSize()) {
-                    title(data.parentTitles, data.currentTitle)
-                    Row(Modifier.fillMaxWidth().weight(1f)) {
-                        data.slides.forEachIndexed { index, subSlide ->
-                            val actualStep = mapStepForSubSlide(
-                                data = data,
-                                columnIndex = index,
-                                step = step
-                            )
-                            body(null, subSlide.currentTitle, subSlide.content, actualStep)
+            is SlideData.SideBySide -> {
+                val stepRetriever = SideBySideStepRetriever(data)
+                Slide(
+                    name = data.slideName(index),
+                    stepCount = stepRetriever.stepCount,
+                    specs = SlideSpecs()
+                ) { globalStep ->
+                    Column(Modifier.fillMaxSize()) {
+                        title(data.parentTitles, data.currentTitle)
+                        Row(Modifier.fillMaxWidth().weight(1f)) {
+                            data.slides.forEachIndexed { index, subSlide ->
+                                val step = stepRetriever.indexForColumn(
+                                    delivery = data.delivery,
+                                    columnIndex = index,
+                                    step = globalStep
+                                )
+                                body(null, subSlide.currentTitle, subSlide.content, step)
+                            }
                         }
                     }
                 }
             }
             is SlideData.Single -> Slide(
                 name = data.slideName(index),
-                stepCount = stepCount,
+                stepCount = data.content.stepsCount(),
                 specs = SlideSpecs()
             ) { step ->
                 body(data.parentTitles, data.currentTitle, data.content, step)
@@ -106,42 +105,22 @@ private fun Tree<SlideContentItem>.countSteps(): Int {
     return 1 + (if (data.sideLabel != null) 1 else 0) + nodes.sumOf { it.countSteps() }
 }
 
-private fun mapStepForSubSlide(
-    data: SlideData.SideBySide,
-    columnIndex: Int,
-    step: Int
-): Int = when (data.delivery) {
-    SideBySideDelivery.PageByPage -> {
-        step - data.slides.take(columnIndex).sumOf { it.content.stepsCount() }
-    }
-    SideBySideDelivery.PerLine -> {
-        data.slides.forEach { it.content.stepsCount() }
-        TODO()
-    }
-}
-
-private fun buildSideBySideSlideIndexMaps(data: SlideData.SideBySide, stepCount: Int): IntIntMap {
-    val map = MutableIntIntMap()
-    val lastIndexOfColumn = MutableIntIntMap(data.slides.size).also {
-        data.slides.forEachIndexed { index, _ -> it[index] = 0 }
-    }
-    var currentColumnIndex = 0
-    for (i in 0 until stepCount) {
-        map[i] = TODO()
-        currentColumnIndex++
-    }
-    return map
-}
-
 private class SideBySideStepRetriever(
-    data: SlideData.SideBySide,
-    stepCount: Int
+    private val data: SlideData.SideBySide,
 ) {
-    fun indexForColumn(columnIndex: Int, step: Int): Int {
-        return columnLocalSteps[columnIndex][step]
+    fun indexForColumn(
+        delivery: SideBySideDelivery,
+        columnIndex: Int,
+        step: Int
+    ): Int = when (delivery) {
+        SideBySideDelivery.PageByPage -> step - stepCounts.take(columnIndex).sum()
+        SideBySideDelivery.PerLine -> columnLocalSteps[columnIndex][step]
     }
 
+    private val stepCounts: List<Int> = data.slides.map { it.content.stepsCount() }
+    val stepCount = stepCounts.sum()
     private val columnLocalSteps: List<IntArray> = data.slides.map { IntArray(stepCount) { -1 } }
+    private val columnLocalSteps2: List<MutableIntList> = data.slides.map { MutableIntList(initialCapacity = stepCount) }
 
     init {
         var lineIndex = 0
@@ -150,8 +129,7 @@ private class SideBySideStepRetriever(
         for (globalStep in 0 until stepCount) {
             run updateTargetColumn@{
                 repeat(columnCount) {
-                    val targetSubSlide = data.slides[targetColumnIndex]
-                    val hasLineForCurrentStep = lineIndex < targetSubSlide.content.stepsCount()
+                    val hasLineForCurrentStep = lineIndex < stepCounts[targetColumnIndex]
                     if (hasLineForCurrentStep) {
                         return@updateTargetColumn
                     } else {
@@ -163,11 +141,14 @@ private class SideBySideStepRetriever(
                 }
                 error("WTF? We should have found a column")
             }
-            columnLocalSteps.forEachIndexed { columnIndex, localSteps: IntArray ->
+            for (columnIndex in 0..<columnCount) {
+                val localSteps = columnLocalSteps2[columnIndex]
                 if (columnIndex == targetColumnIndex) {
-                    val hasLine data.slides[targetColumnIndex]
+                    localSteps[globalStep] = lineIndex
+                } else {
+                    val lastLineIndexForColumn = if (localSteps.isEmpty()) -1 else localSteps.last()
+                    localSteps[globalStep] = lastLineIndexForColumn
                 }
-                localSteps[globalStep] =
             }
         }
     }
