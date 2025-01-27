@@ -25,7 +25,7 @@ private fun Title(
     parentTitles: List<SlideTitle>,
     slideTitle: SlideTitle?
 ) = Column(
-    modifier = Modifier.fillMaxWidth().padding(64.dp),
+    modifier = Modifier.fillMaxWidth().padding(16.dp),
     verticalArrangement = Arrangement.spacedBy(32.dp)
 ) {
     if (parentTitles.isNotEmpty()) {
@@ -108,14 +108,20 @@ private class DefaultCupSlidesMaker(
                 ) { globalStep ->
                     Column(Modifier.fillMaxSize()) {
                         title(data.parentTitles, data.currentTitle)
-                        Row(Modifier.fillMaxWidth().weight(1f)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().weight(1f),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
                             data.slides.forEachIndexed { index, subSlide ->
                                 val step = stepRetriever.indexForColumn(
                                     delivery = data.delivery,
                                     columnIndex = index,
                                     globalStep = globalStep - 1
                                 )
-                                body(null, subSlide.currentTitle, subSlide.content, step)
+                                Column(Modifier.fillMaxHeight().weight(1f)) {
+                                    title(emptyList(), subSlide.currentTitle)
+                                    body(null, subSlide.currentTitle, subSlide.content, step)
+                                }
                             }
                         }
                     }
@@ -186,13 +192,17 @@ private class SideBySideStepRetriever(
             }
             for (columnIndex in 0..<columnCount) {
                 val localSteps = columnLocalSteps[columnIndex]
-                if (columnIndex == targetColumnIndex) {
-                    localSteps[globalStep] = lineIndex
+                localSteps += if (columnIndex == targetColumnIndex) {
+                    lineIndex
                 } else {
                     val lastLineIndexForColumn = if (localSteps.isEmpty()) -1 else localSteps.last()
-                    localSteps[globalStep] = lastLineIndexForColumn
+                    lastLineIndexForColumn
                 }
             }
+            if (targetColumnIndex + 1 == columnCount) {
+                targetColumnIndex = 0
+                lineIndex++
+            } else targetColumnIndex++
         }
     }
 }

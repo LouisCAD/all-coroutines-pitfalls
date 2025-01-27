@@ -15,6 +15,7 @@ fun SlidesBuilder.coroutinesQuickIntro() {
 
 private fun SlidesBuilder.definitions() {
     "Let's talk definitions".slidesGroup(
+        smallTitle = "Definitions",
         subtitle = "To make sure we're on the same page",
     ) {
         "What is a coroutine?".slide(Bullets) {
