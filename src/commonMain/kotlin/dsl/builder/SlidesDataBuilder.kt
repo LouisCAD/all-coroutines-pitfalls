@@ -108,9 +108,10 @@ class SlidesDataBuilder private constructor(
     ) {
         if (overviewTitle != null) onNewTitle(overviewTitle)
         val subSlidesBuilder = SubSlidesDataBuilder()
-        slideDataList += SlideData.Comparison(
+        slideDataList += SlideData.SideBySide(
             parentTitles = parentTitles,
             currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
+            delivery = delivery,
             slides = subSlidesBuilder.build()
         )
     }

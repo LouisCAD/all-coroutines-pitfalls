@@ -1,6 +1,8 @@
+import androidx.collection.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dsl.SideBySideDelivery
 import dsl.SlidesBuilder
 import dsl.builder.SlidesDataBuilder
 import dsl.model.*
@@ -59,11 +61,11 @@ private class DefaultCupSlidesMaker(
         next: SlideData?
     ) {
         val stepCount: Int = when (data) {
-            is SlideData.Comparison -> data.slides.sumOf { it.content.stepsCount() }
+            is SlideData.SideBySide -> data.slides.sumOf { it.content.stepsCount() }
             is SlideData.TitleAndContent -> data.content.stepsCount()
         }
         this += when (data) {
-            is SlideData.Comparison -> Slide(
+            is SlideData.SideBySide -> Slide(
                 name = data.slideName(index),
                 stepCount = stepCount,
                 specs = SlideSpecs()
@@ -72,7 +74,11 @@ private class DefaultCupSlidesMaker(
                     title(data.parentTitles, data.currentTitle)
                     Row(Modifier.fillMaxWidth().weight(1f)) {
                         data.slides.forEachIndexed { index, subSlide ->
-                            val actualStep = 0 //TODO: Map step depending on the delivery strategy.
+                            val actualStep = mapStepForSubSlide(
+                                data = data,
+                                columnIndex = index,
+                                step = step
+                            )
                             body(null, subSlide.currentTitle, subSlide.content, actualStep)
                         }
                     }
@@ -98,4 +104,71 @@ private fun SlideContent.stepsCount(): Int = when (this) {
 
 private fun Tree<SlideContentItem>.countSteps(): Int {
     return 1 + (if (data.sideLabel != null) 1 else 0) + nodes.sumOf { it.countSteps() }
+}
+
+private fun mapStepForSubSlide(
+    data: SlideData.SideBySide,
+    columnIndex: Int,
+    step: Int
+): Int = when (data.delivery) {
+    SideBySideDelivery.PageByPage -> {
+        step - data.slides.take(columnIndex).sumOf { it.content.stepsCount() }
+    }
+    SideBySideDelivery.PerLine -> {
+        data.slides.forEach { it.content.stepsCount() }
+        TODO()
+    }
+}
+
+private fun buildSideBySideSlideIndexMaps(data: SlideData.SideBySide, stepCount: Int): IntIntMap {
+    val map = MutableIntIntMap()
+    val lastIndexOfColumn = MutableIntIntMap(data.slides.size).also {
+        data.slides.forEachIndexed { index, _ -> it[index] = 0 }
+    }
+    var currentColumnIndex = 0
+    for (i in 0 until stepCount) {
+        map[i] = TODO()
+        currentColumnIndex++
+    }
+    return map
+}
+
+private class SideBySideStepRetriever(
+    data: SlideData.SideBySide,
+    stepCount: Int
+) {
+    fun indexForColumn(columnIndex: Int, step: Int): Int {
+        return columnLocalSteps[columnIndex][step]
+    }
+
+    private val columnLocalSteps: List<IntArray> = data.slides.map { IntArray(stepCount) { -1 } }
+
+    init {
+        var lineIndex = 0
+        var targetColumnIndex = 0
+        val columnCount = data.slides.size
+        for (globalStep in 0 until stepCount) {
+            run updateTargetColumn@{
+                repeat(columnCount) {
+                    val targetSubSlide = data.slides[targetColumnIndex]
+                    val hasLineForCurrentStep = lineIndex < targetSubSlide.content.stepsCount()
+                    if (hasLineForCurrentStep) {
+                        return@updateTargetColumn
+                    } else {
+                        if (targetColumnIndex + 1 == columnCount) {
+                            targetColumnIndex = 0
+                            lineIndex++
+                        } else targetColumnIndex++
+                    }
+                }
+                error("WTF? We should have found a column")
+            }
+            columnLocalSteps.forEachIndexed { columnIndex, localSteps: IntArray ->
+                if (columnIndex == targetColumnIndex) {
+                    val hasLine data.slides[targetColumnIndex]
+                }
+                localSteps[globalStep] =
+            }
+        }
+    }
 }

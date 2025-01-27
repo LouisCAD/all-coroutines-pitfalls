@@ -1,5 +1,7 @@
 package dsl.model
 
+import dsl.SideBySideDelivery
+
 sealed interface SlideData {
     val currentTitle: SlideTitle?
 
@@ -14,9 +16,10 @@ sealed interface SlideData {
         override val content: SlideContent
     ) : SlideData, TitleAndContent
 
-    data class Comparison(
+    data class SideBySide(
         override val parentTitles: List<SlideTitle>,
         override val currentTitle: SlideTitle?,
+        val delivery: SideBySideDelivery,
         val slides: List<SubSlide>
     ) : SlideData, TopLevel, WithParentTitles
 
