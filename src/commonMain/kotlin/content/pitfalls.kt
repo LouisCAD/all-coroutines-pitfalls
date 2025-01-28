@@ -55,11 +55,6 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
             "Using callback APIs, with proper bridging"()
         }
     }
-    "👶 ➡️ 🍽️ ➡️ 🐺 Orphan coroutines eaten".slidesGroup {
-        "🚛 🗑️ Don't let your coroutines be garbage collected!".slide {
-            
-        }
-    }
     "❌❌❌ Wrong Dispatcher".slidesGroup {
         "The 3-ish Dispatchers that matter".slide {
             "Dispatchers.Main" {
@@ -105,6 +100,10 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
         }
     }
     "CoroutineScope pitfalls".slidesGroup(disposition = Bullets) {
+        "Using GlobalScope".slide {
+            //TODO: Illustrate
+
+        }
         "Using the wrong `CoroutineScope`".slide {
             "Many ways to get a `CoroutineScope`"()
             "Only a few ways to get the right one"()
@@ -115,8 +114,15 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
         "launching a coroutine in a scope being cancelled".slide {
             //TODO: Illustrate
         }
-        "Using GlobalScope".slide {
-
+        "👶 ➡️ 🍽️ ➡️ 🐺 Orphan coroutines eaten".slidesGroup {
+            "🚛 🗑️ Don't let your coroutines be garbage collected!".slide {
+                "Some callback APIs might use `WeakReference` under the hood" {
+                    "Like Android's" {
+                        "MediaPlayer"()
+                        "SharedPreferences"()
+                    }
+                }
+            }
         }
     }
     "Wrong function signatures".slide {
