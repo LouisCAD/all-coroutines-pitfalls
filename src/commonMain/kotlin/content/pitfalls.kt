@@ -6,7 +6,8 @@ import dsl.SlidesBuilder
 
 fun SlidesBuilder.pitfalls() {
     kindsOfPitfalls(startCentered = true)
-    pitfallsPartOne()
+    pitfallsPartOne("Part 1: Coroutines pitfalls")
+    flowPitfalls("Part 2: Coroutines' Flows pitfalls")
 }
 
 fun SlidesBuilder.kindsOfPitfalls(startCentered: Boolean = false) {
@@ -18,7 +19,7 @@ fun SlidesBuilder.kindsOfPitfalls(startCentered: Boolean = false) {
     }
 }
 
-private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".slidesGroup(
+private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
     disposition = Bullets.Numbers,
     smallTitle = ""
 ) {
@@ -128,4 +129,11 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
     "Concurrency not thought through".slide {
         "Unintendedly have the same function run twice in parallel"()
     }
+}
+
+private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
+    disposition = Bullets.Numbers,
+    smallTitle = ""
+) {
+
 }

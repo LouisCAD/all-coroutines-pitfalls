@@ -93,7 +93,10 @@ private fun Body(
     step: Int
 ) {
     when (content) {
-        is SlideContent.Elements -> Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        is SlideContent.Elements -> Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             ContentItems(
                 disposition = content.disposition,
                 items = content.elements,

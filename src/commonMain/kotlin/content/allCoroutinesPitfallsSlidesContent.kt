@@ -16,15 +16,18 @@ fun allCoroutinesPitfallsSlidesContent() = buildSlides {
 }
 
 private fun SlidesBuilder.finalAdvice() = "Final advice".slide {
-    "Before using anything" {
+    "📜 Before using anything" {
         "READ ITS DOC 😉"()
     }
-    "Don't eat `CancellationException"()
-    "Make sure you use the right `CoroutineScope`"()
-    "Leverage coroutines everywhere 💪" {
+    "❌ Don't eat `CancellationException" {
+        "Always rethrow it"()
+        "(just like that:  🤮)"()
+    }
+    "✅ Make sure you use the right `CoroutineScope`"()
+    "💪 Leverage coroutines everywhere" {
         "Avoid ANRs!"()
         "Make users happy!"()
     }
-    "Try making reliable software"()
-    "Spread the word!"()
+    "🛡️ Try making reliable software"()
+    "📢 Spread the word!"()
 }

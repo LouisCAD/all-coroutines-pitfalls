@@ -2,6 +2,7 @@
 
 ## Would be cool now
 
+- Animate for startCentered https://stackoverflow.com/a/70031663
 - Provide content delivery mode:
   - Depth first (current one)
   - Breadth first
