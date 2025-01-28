@@ -19,7 +19,8 @@ fun SlidesBuilder.kindsOfPitfalls(startCentered: Boolean = false) {
 }
 
 private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".slidesGroup(
-    disposition = Bullets.Numbers
+    disposition = Bullets.Numbers,
+    smallTitle = ""
 ) {
     "Incorrect handling of errors/exceptions/throwables".slide {
         "Catch CancellationException"()
@@ -53,7 +54,12 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
             "Using callback APIs, with proper bridging"()
         }
     }
-    "TK Wrong Dispatcher".slidesGroup {
+    "Orphan coroutines eaten 🍽️ ➡️ 🐺".slidesGroup {
+        "Don't let your coroutines be garbage collected".slide {
+
+        }
+    }
+    "Wrong Dispatcher".slidesGroup {
         "Overuse Dispatchers.IO".sideBySide {
             "Wrong use".slide {
                 "Non blocking I/O"()
@@ -71,6 +77,9 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
                     "Jump into the source to see if it's connecting to a Service"()
                 }
             }
+        }
+        "Underuse Dispatchers.IO".sideBySide {
+            //TODO: Fill content
         }
         //TODO: Elaborate
         //TODO: Add bad examples, with correction/good examples.

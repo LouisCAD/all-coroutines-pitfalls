@@ -47,16 +47,23 @@ private fun Title(
     modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(16.dp)
 ) {
-    if (parentTitles.isNotEmpty()) {
-        val text = parentTitles.joinToString(separator = " > ") {
-            it.smallTitle ?: it.text
-        }
+    val targetTitle: SlideTitle?
+    val targetParentTitles: List<String> =
+    if (slideTitle == null) {
+        targetTitle = parentTitles.lastOrNull()
+        parentTitles.dropLast(1)
+    } else {
+        targetTitle = slideTitle
+        parentTitles
+    }.map { it.smallTitle ?: it.text }.filter { it.isNotEmpty() }
+    if (targetParentTitles.isNotEmpty()) {
+        val text = targetParentTitles.joinToString(separator = " > ")
         Text(
             text = text,
             style = MaterialTheme.typography.titleSmall
         )
     }
-    slideTitle?.let {
+    targetTitle?.let {
         Text(
             text = it.text,
             Modifier.align(Alignment.CenterHorizontally),
