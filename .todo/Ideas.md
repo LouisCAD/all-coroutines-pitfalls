@@ -2,6 +2,8 @@
 
 ## Would be cool now
 
+- Improve slidesGroup overview generation:
+  - Generate 2 step middle slides when moving to another direct subSlide
 - Animate for startCentered https://stackoverflow.com/a/70031663
 - Provide content delivery mode:
   - Depth first (current one)

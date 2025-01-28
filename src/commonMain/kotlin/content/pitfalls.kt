@@ -135,5 +135,7 @@ private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
     disposition = Bullets.Numbers,
     smallTitle = ""
 ) {
-
+    "When using mutable objects".slidesGroup {
+        ""
+    }
 }

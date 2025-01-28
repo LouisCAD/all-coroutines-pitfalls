@@ -28,6 +28,10 @@ private fun SlidesBuilder.finalAdvice() = "Final advice".slide {
         "Avoid ANRs!"()
         "Make users happy!"()
     }
-    "🛡️ Try making reliable software"()
+    "🛡️ Try making good software" {
+        "Reliability"()
+        "Efficiency"()
+        "Nice UX"()
+    }
     "📢 Spread the word!"()
 }
