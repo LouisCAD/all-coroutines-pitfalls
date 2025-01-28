@@ -40,9 +40,16 @@ class SlidesDataBuilder private constructor(
         block: SlideBuilder.() -> Unit
     ) {
         if (title != null) onNewTitle(title)
+        val currentTitle = slideTitleOrNull(title = title, subtitle = subtitle)
+        //TODO: Don't create this slide, and pass startCentered instead, to allow animation.
+        if (startCentered) slideDataList += SlideData.Single(
+            parentTitles = parentTitles,
+            currentTitle = currentTitle,
+            content = SlideContent.SingleElement(contentKind = TextContentKind.CenteredTitle)
+        )
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
-            currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
+            currentTitle = currentTitle,
             content = slideContentElements(disposition, block)
         )
     }

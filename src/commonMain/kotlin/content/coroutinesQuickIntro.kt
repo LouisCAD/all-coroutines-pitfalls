@@ -80,12 +80,26 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             }
             "How they work".slide {
                 "They are compiled to normal functions…"()
-                "They are compiled to normal functions…"()
+                "that can be reentered multiple times…"()
+                "until done…"()
             }
-            ""
+            "Their hidden power: cancellation".slide {
+                "brought by kotlinx.coroutines"()
+                "propagates automatically"()
+                "powered by \"Job\""()
+            }
         }
-        "suspend funs' hidden power".slide {
-            "cancellation"()
+        "How to start a coroutine?".slide(Bullets.Numbers) {
+            "Get a CoroutineScope"()
+            "Call `launch { … }` or `async { … }`"()
         }
+        "How to stop a coroutine?".slide {
+            "Call cancel() at the right place"()
+            "Use a construct that will do it automatically" {
+                "`***Latest` `Flow` operators"()
+                "`raceOf(…)`"()
+            }
+        }
+        "TK".slide()
     }
 }

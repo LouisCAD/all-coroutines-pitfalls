@@ -7,7 +7,9 @@ import net.kodein.cup.widgets.material3.cupScaleDown
 fun PresentationTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = lightColorScheme(),
-        typography = MaterialTheme.typography.cupScaleDown()
+        typography = MaterialTheme.typography.copy(
+            //TODO: Customize stuff
+        ).cupScaleDown()
     ) {
         content()
     }

@@ -73,7 +73,7 @@ private fun Body(
     step: Int
 ) {
     when (content) {
-        is SlideContent.Elements -> Column(modifier) {
+        is SlideContent.Elements -> Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
             ContentItems(
                 disposition = content.disposition,
                 items = content.elements,
@@ -161,6 +161,8 @@ private class DefaultCupSlidesMaker(
     // to let people know it's time to take a picture before the content goes away.
 
     //TODO: Do a chapter closing
+
+    private val slideRootModifier = Modifier.fillMaxSize().padding(16.dp)
     private fun MutableList<Slide>.addSlide(
         index: Int,
         data: SlideData.TopLevel,
@@ -175,7 +177,7 @@ private class DefaultCupSlidesMaker(
                     stepCount = stepRetriever.stepCount + 1,
                     specs = SlideSpecs()
                 ) { globalStep ->
-                    Column(Modifier.fillMaxSize()) {
+                    Column(slideRootModifier) {
                         title(data.parentTitles, data.currentTitle)
                         Row(
                             modifier = Modifier.fillMaxWidth().weight(1f),
@@ -189,6 +191,7 @@ private class DefaultCupSlidesMaker(
                                 )
                                 Column(Modifier.fillMaxHeight().weight(1f)) {
                                     title(emptyList(), subSlide.currentTitle)
+                                    Spacer(Modifier.height(16.dp))
                                     body(null, subSlide.currentTitle, subSlide.content, step)
                                 }
                             }
@@ -201,10 +204,11 @@ private class DefaultCupSlidesMaker(
                 stepCount = data.content.stepsCount() + 1,
                 specs = SlideSpecs()
             ) { step ->
-                Column(Modifier.fillMaxSize()) {
+                Column(slideRootModifier) {
                     if (data.content !is SlideContent.SingleElement) {
                         title(data.parentTitles, data.currentTitle)
                     }
+                    Spacer(Modifier.height(16.dp))
                     body(data.parentTitles, data.currentTitle, data.content, step - 1)
                 }
             }

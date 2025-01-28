@@ -1,5 +1,7 @@
 package dsl
 
+import kotlin.jvm.JvmName
+
 abstract class SlidesBuilder : SubSlidesBuilder() {
 
     fun String.slidesGroup(
@@ -27,6 +29,14 @@ abstract class SlidesBuilder : SubSlidesBuilder() {
         smallTitle = smallTitle,
         groupContent = groupContent
     )
+
+    @JvmName("sideBySideWithReceiver")
+    fun String.sideBySide(
+        subtitle: String? = null,
+        overviewTitle: String? = this,
+        delivery: SideBySideDelivery = SideBySideDelivery.PageByPage,
+        block: SubSlidesBuilder.() -> Unit
+    ) = sideBySide(this, subtitle, overviewTitle, delivery, block)
 
     abstract fun sideBySide(
         title: String? = null,

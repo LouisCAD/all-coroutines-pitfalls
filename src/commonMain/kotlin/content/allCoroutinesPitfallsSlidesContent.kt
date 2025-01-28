@@ -4,7 +4,7 @@ import buildSlides
 import dsl.TextContentKind
 
 fun allCoroutinesPitfallsSlidesContent() = buildSlides {
-    "All* coroutines pitfalls".slide(
+    "🧨 All* coroutines pitfalls".slide(
         TextContentKind.PresentationOpening,
         subtitle = "Une présentation en franglais, proposée par Louis CAD"
     )
