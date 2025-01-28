@@ -2,14 +2,28 @@ import all_coroutines_pitfalls.generated.resources.*
 import all_coroutines_pitfalls.generated.resources.Res
 import all_coroutines_pitfalls.generated.resources.avenir_next_b
 import all_coroutines_pitfalls.generated.resources.avenir_next_b_i
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import net.kodein.cup.widgets.material3.cupScaleDown
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.decodeToSvgPainter
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun PresentationTheme(content: @Composable () -> Unit) {
@@ -28,7 +42,7 @@ fun PresentationTheme(content: @Composable () -> Unit) {
                 titleLarge = titleLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
                 titleMedium = titleMedium.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
                 titleSmall = titleSmall.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
-                bodyLarge = bodyLarge.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Light),
+                bodyLarge = bodyLarge.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Medium),
                 bodyMedium = bodyMedium.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Light),
                 bodySmall = bodySmall.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Light),
                 labelLarge = labelLarge.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Medium),
@@ -37,7 +51,31 @@ fun PresentationTheme(content: @Composable () -> Unit) {
             )
         }.cupScaleDown()
     ) {
-        content()
+        Box {
+            content()
+            Image(
+                painter = painterResource(Res.drawable.logo_k),
+                contentDescription = null,
+                modifier = Modifier.size(48.dp).align(Alignment.BottomEnd).padding(8.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun LogoWithBytes() {
+    val density = LocalDensity.current
+    @OptIn(ExperimentalResourceApi::class)
+    val painter by produceState<Painter?>(initialValue = null) {
+        value = Res.readBytes("files/logo_k.svg").decodeToSvgPainter(density)
+    }
+    painter?.let {
+        Image(
+            painter = it,
+            contentDescription = null,
+            modifier = Modifier.padding(8.dp),
+            alignment = Alignment.BottomEnd
+        )
     }
 }
 
