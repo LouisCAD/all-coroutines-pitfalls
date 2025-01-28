@@ -142,21 +142,21 @@ private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
     disposition = Bullets.Numbers,
     smallTitle = ""
 ) {
-    "When using mutable objects".slidesGroup {
-        "Emitting mutable objects".slide {
-            "Problems"(Bullets) {
-                "Mutating doesn't change object identity" {
-                    "Changes don't get through `StateFlow` or `distinctUntilChanged()` 😶"()
-                }
-            }
-            "Solution"(Bullets.Abc) {
-                "Lose the habit of using non-observable mutable objects"()
-                "Minimize the mutability scope" {
-                    "Keep the mutable object inside"()
-                    "Emit a defensive copy"()
-                }
+    "Emitting mutable objects".slide {
+        //TODO: Illustrate with a bad example
+        "Problems"(Bullets) {
+            "Mutating doesn't change object identity" {
+                "Changes don't get through `StateFlow` or `distinctUntilChanged()` 😶"()
             }
         }
-        "".slide {  }
+        //TODO: Illustrate with a good example
+        "Solution"(Bullets.Abc) {
+            "Lose the habit of using non-observable mutable objects"()
+            "Minimize the mutability scope" {
+                "Keep the mutable object inside"()
+                "Emit a defensive copy"()
+            }
+        }
     }
+    "Confusing Events and States".slide { }
 }
