@@ -122,6 +122,7 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
                         "SharedPreferences"()
                     }
                 }
+                //TODO: Explain the problem
             }
         }
     }
