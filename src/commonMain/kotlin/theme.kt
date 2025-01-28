@@ -18,8 +18,21 @@ fun PresentationTheme(content: @Composable () -> Unit) {
         colorScheme = lightColorScheme(),
         typography = MaterialTheme.typography.run {
             copy(
-                displayLarge = displayLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold)
-            //TODO: Customize stuff
+                displayLarge = displayLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold),
+                displayMedium = displayMedium,
+                displaySmall = displaySmall,
+                headlineLarge = headlineLarge,
+                headlineMedium = headlineMedium,
+                headlineSmall = headlineSmall,
+                titleLarge = titleLarge,
+                titleMedium = titleMedium,
+                titleSmall = titleSmall,
+                bodyLarge = bodyLarge,
+                bodyMedium = bodyMedium,
+                bodySmall = bodySmall,
+                labelLarge = labelLarge,
+                labelMedium = labelMedium,
+                labelSmall = labelSmall,
             )
         }.cupScaleDown()
     ) {
