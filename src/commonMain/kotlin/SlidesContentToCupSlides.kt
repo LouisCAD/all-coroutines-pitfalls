@@ -269,17 +269,20 @@ private class SideBySideStepRetriever(
         var lineIndex = 0
         var targetColumnIndex = 0
         val columnCount = data.slides.size
+        fun nextCell() {
+            if (targetColumnIndex + 1 == columnCount) {
+                targetColumnIndex = 0
+                lineIndex++
+            } else targetColumnIndex++
+        }
         for (globalStep in 0 until stepCount) {
-            run updateTargetColumn@{
+            run updateCell@{
                 repeat(columnCount) {
                     val hasLineForCurrentStep = lineIndex < stepCounts[targetColumnIndex]
                     if (hasLineForCurrentStep) {
-                        return@updateTargetColumn
+                        return@updateCell
                     } else {
-                        if (targetColumnIndex + 1 == columnCount) {
-                            targetColumnIndex = 0
-                            lineIndex++
-                        } else targetColumnIndex++
+                        nextCell()
                     }
                 }
                 error("WTF? We should have found a column")
@@ -293,10 +296,7 @@ private class SideBySideStepRetriever(
                     lastLineIndexForColumn
                 }
             }
-            if (targetColumnIndex + 1 == columnCount) {
-                targetColumnIndex = 0
-                lineIndex++
-            } else targetColumnIndex++
+            nextCell()
         }
     }
 }

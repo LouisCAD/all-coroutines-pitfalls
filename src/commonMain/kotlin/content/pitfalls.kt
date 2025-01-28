@@ -55,8 +55,8 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
         }
     }
     "Orphan coroutines eaten 🍽️ ➡️ 🐺".slidesGroup {
-        "Don't let your coroutines be garbage collected".slide {
-
+        "🚛 🗑️ Don't let your coroutines be garbage collected!".slide {
+            
         }
     }
     "Wrong Dispatcher".slidesGroup {
