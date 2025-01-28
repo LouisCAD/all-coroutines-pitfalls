@@ -1,22 +1,25 @@
-import androidx.collection.MutableIntList
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.unit.dp
 import dsl.Disposition
-import dsl.SideBySideDelivery
 import dsl.SlidesBuilder
 import dsl.TextContentKind
 import dsl.builder.SlidesDataBuilder
-import dsl.model.*
+import dsl.model.SlideContent
+import dsl.model.SlideContentItem
+import dsl.model.SlideTitle
+import dsl.model.Tree
 import net.kodein.cup.Slide
-import net.kodein.cup.SlideSpecs
 
 
 fun buildSlides(
@@ -124,6 +127,8 @@ private fun ContentItems(
     step = step
 )
 
+private val unblurAnimation = spring<Float>(stiffness = Spring.StiffnessHigh)
+
 @Composable
 private fun ContentItems(
     disposition: Disposition,
@@ -135,11 +140,16 @@ private fun ContentItems(
     var index = stepIndexOffset
     items.forEach { tree ->
         val visible = step >= index
+        val blurFactor by animateFloatAsState(
+            targetValue = if (visible) 0f else 1f,
+            animationSpec = unblurAnimation
+        )
         Text(
             text = tree.data.text,
-            modifier = Modifier.padding(start = 16.dp * depth).let {
-                if (visible) it else it.blur(8.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-            }
+            modifier = Modifier.padding(start = 16.dp * depth).blur(
+                radius = 12.dp * blurFactor,
+                edgeTreatment = BlurredEdgeTreatment.Unbounded
+            )
         )
         index++
         index += ContentItems(

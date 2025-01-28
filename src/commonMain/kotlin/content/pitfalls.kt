@@ -59,7 +59,16 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
             
         }
     }
-    "Wrong Dispatcher".slidesGroup {
+    "❌❌❌ Wrong Dispatcher".slidesGroup {
+        "The 3-ish Dispatchers that matter".slide {
+            "Dispatchers.Main" {
+                "Touching the UI"()
+                "Synchronizing state on a single thread"()
+            }
+            "Dispatchers.Default" {
+                
+            }
+        }
         "Underusing Dispatchers.IO".sideBySide {
             //TODO: Fill content
         }
