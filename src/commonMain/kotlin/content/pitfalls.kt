@@ -54,12 +54,15 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
             "Using callback APIs, with proper bridging"()
         }
     }
-    "Orphan coroutines eaten 🍽️ ➡️ 🐺".slidesGroup {
+    "👶 ➡️ 🍽️ ➡️ 🐺 Orphan coroutines eaten".slidesGroup {
         "🚛 🗑️ Don't let your coroutines be garbage collected!".slide {
             
         }
     }
     "Wrong Dispatcher".slidesGroup {
+        "Underuse Dispatchers.IO".sideBySide {
+            //TODO: Fill content
+        }
         "Overuse Dispatchers.IO".sideBySide {
             "Wrong use".slide {
                 "Non blocking I/O"()
@@ -67,7 +70,10 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
                 "Everything, just in case"()
             }
             "Correct usage".slide {
-                "Wrapping blocking I/O sections"()
+                "Wrapping blocking I/O sections" {
+                    "File I/O"()
+                    "File I/O"()
+                }
                 "Wrapping IPC calls" {
                     "Some system calls, often in Android's `Managers`"(sideLabel = "Inter-Process Communication") {
                         "packageManager"()
@@ -78,29 +84,26 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
                 }
             }
         }
-        "Underuse Dispatchers.IO".sideBySide {
-            //TODO: Fill content
-        }
         //TODO: Elaborate
         //TODO: Add bad examples, with correction/good examples.
     }
-    "Making a messed-up CoroutineContext".slide {
+    "🤪 Making a messed-up CoroutineContext".slide {
         "Replacing the `Job` of a `CoroutineContext`" {
             "It disconnects it from the original hierarchy, and breaking the structured concurreny chain"()
         }
     }
     "CoroutineScope pitfalls".slidesGroup(disposition = Bullets) {
-        "Use the wrong `CoroutineScope`".slide {
+        "Using the wrong `CoroutineScope`".slide {
             "Many ways to get a `CoroutineScope`"()
             "Only a few ways to get the right one"()
         }
-        "Confuse coroutineScope and CoroutineScope".slide {
+        "Confusing coroutineScope and CoroutineScope".slide {
             //TODO: Illustrate
         }
         "launch a coroutine in a scope being cancelled".slide {
             //TODO: Illustrate
         }
-        "Use GlobalScope".slide {
+        "Using GlobalScope".slide {
 
         }
     }

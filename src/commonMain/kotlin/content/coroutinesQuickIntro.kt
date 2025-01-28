@@ -89,6 +89,9 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
                 "powered by \"Job\""()
             }
         }
+        "What's a coroutine again?".slide {
+            "A coroutine is an instance of a suspendable computation"()
+        }
         "How to start a coroutine?".slide(Bullets.Numbers) {
             "Get a CoroutineScope"()
             "Call `launch { … }` or `async { … }`"()
