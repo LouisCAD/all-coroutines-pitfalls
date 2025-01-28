@@ -60,10 +60,10 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
         }
     }
     "Wrong Dispatcher".slidesGroup {
-        "Underuse Dispatchers.IO".sideBySide {
+        "Underusing Dispatchers.IO".sideBySide {
             //TODO: Fill content
         }
-        "Overuse Dispatchers.IO".sideBySide {
+        "Overusing Dispatchers.IO".sideBySide {
             "Wrong use".slide {
                 "Non blocking I/O"()
                 "CPU-bound work"()
@@ -72,15 +72,17 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
             "Correct usage".slide {
                 "Wrapping blocking I/O sections" {
                     "File I/O"()
-                    "File I/O"()
+                    "Blocking I/O that has no asynchronous/suspending alternative"()
+                    "IPC (Inter-Process Communication)" {
+                        "Some system calls, often in Android's `Managers`"(sideLabel = "Inter-Process Communication") {
+                            "packageManager"()
+                            "DownloadManager"()
+                            "…"()
+                        }
+                        "Jump into the source to see if it's connecting to a Service"()
+                    }
                 }
                 "Wrapping IPC calls" {
-                    "Some system calls, often in Android's `Managers`"(sideLabel = "Inter-Process Communication") {
-                        "packageManager"()
-                        "DownloadManager"()
-                        "…"()
-                    }
-                    "Jump into the source to see if it's connecting to a Service"()
                 }
             }
         }
@@ -100,7 +102,7 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
         "Confusing coroutineScope and CoroutineScope".slide {
             //TODO: Illustrate
         }
-        "launch a coroutine in a scope being cancelled".slide {
+        "launching a coroutine in a scope being cancelled".slide {
             //TODO: Illustrate
         }
         "Using GlobalScope".slide {
