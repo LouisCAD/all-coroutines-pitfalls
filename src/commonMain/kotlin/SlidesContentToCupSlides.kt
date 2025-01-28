@@ -5,7 +5,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.unit.dp
 import dsl.Disposition
 import dsl.SideBySideDelivery
@@ -135,7 +137,9 @@ private fun ContentItems(
         val visible = step >= index
         Text(
             text = tree.data.text,
-            modifier = Modifier.alpha(if (visible) 1f else 0.05f).padding(start = 16.dp * depth)
+            modifier = Modifier.padding(start = 16.dp * depth).let {
+                if (visible) it else it.blur(8.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            }
         )
         index++
         index += ContentItems(
