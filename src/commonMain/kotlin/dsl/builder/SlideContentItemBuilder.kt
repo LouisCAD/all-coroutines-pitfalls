@@ -1,5 +1,6 @@
 package dsl.builder
 
+import dsl.Disposition
 import dsl.SlideBuilder
 import dsl.model.SlideContentItem
 import dsl.model.Tree
@@ -9,6 +10,7 @@ class SlideContentItemBuilder(
 ) : SlideBuilder {
 
     override fun String.invoke(
+        disposition: Disposition?,
         sideLabel: String?,
         block: SlideBuilder.() -> Unit
     ) {
@@ -16,6 +18,7 @@ class SlideContentItemBuilder(
         trees += Tree(
             data = SlideContentItem(
                 text = this,
+                disposition = disposition,
                 sideLabel = sideLabel
             ),
             nodes = newList

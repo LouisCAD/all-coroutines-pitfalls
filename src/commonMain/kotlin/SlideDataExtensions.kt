@@ -3,7 +3,9 @@ import dsl.model.SlideContentItem
 import dsl.model.SlideData
 import dsl.model.Tree
 
-fun SlideData.slideName(index: Int): String = currentTitle?.smallTitle ?: index.toString()
+fun SlideData.slideName(index: Int): String {
+    return currentTitle?.smallTitle?.takeUnless { it.isBlank() } ?: currentTitle?.text ?: index.toString()
+}
 
 fun SlideContent.stepsCount(): Int = when (this) {
     is SlideContent.Elements -> this.elements.sumOf { it.countSteps() }

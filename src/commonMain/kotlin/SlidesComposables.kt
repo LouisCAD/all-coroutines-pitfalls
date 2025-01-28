@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastForEachIndexed
 import dsl.Disposition
 import dsl.SlidesBuilder
 import dsl.TextContentKind
@@ -141,22 +142,32 @@ private fun ContentItems(
     step: Int
 ): Int {
     var index = stepIndexOffset
-    items.forEach { tree ->
+    val modifier = when (disposition) {
+        is Disposition.Bullets -> Modifier.padding(start = 16.dp * depth)
+        is Disposition.List -> Modifier
+    }
+    items.fastForEachIndexed { i, tree ->
         val visible = step >= index
         val blurFactor by animateFloatAsState(
             targetValue = if (visible) 0f else 1f,
             animationSpec = unblurAnimation
         )
+        val prefix = when (disposition) {
+            Disposition.Bullets.Abc -> "${ALPHABET[i]}. "
+            Disposition.Bullets -> "• "
+            Disposition.Bullets.Numbers -> "${i + 1}. "
+            is Disposition.List -> ""
+        }
         Text(
-            text = tree.data.text,
-            modifier = Modifier.padding(start = 16.dp * depth).blur(
+            text = prefix + tree.data.text,
+            modifier = modifier.blur(
                 radius = 12.dp * blurFactor,
                 edgeTreatment = BlurredEdgeTreatment.Unbounded
             )
         )
         index++
         index += ContentItems(
-            disposition = disposition,
+            disposition = tree.data.disposition ?: disposition,
             items = tree.nodes,
             depth = depth + 1,
             stepIndexOffset = index,
@@ -165,3 +176,5 @@ private fun ContentItems(
     }
     return index - stepIndexOffset
 }
+
+private const val ALPHABET = "ABCDEFGHIKLMNOPQRSTUVWXYZ"

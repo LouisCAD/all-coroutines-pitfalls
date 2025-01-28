@@ -9,10 +9,18 @@ fun allCoroutinesPitfallsSlidesContent() = buildSlides {
         TextContentKind.PresentationOpening,
         subtitle = "Une présentation en franglais, proposée par Louis CAD"
     )
+    getReady()
     coroutinesQuickIntro()
     pitfalls()
     finalAdvice()
     //TODO: Add conclusion and/or outro
+}
+
+private fun SlidesBuilder.getReady() {
+    "Turn on your brain! 🧠⚡️".slide {
+        "Dozens of pitfalls to cover"()
+        "Only 40 minutes"()
+    }
 }
 
 private fun SlidesBuilder.finalAdvice() = "Final advice".slide {

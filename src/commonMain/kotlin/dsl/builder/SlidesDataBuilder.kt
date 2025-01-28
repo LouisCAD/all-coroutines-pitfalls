@@ -101,7 +101,7 @@ class SlidesDataBuilder private constructor(
             parentTitles = parentTitles + slideTitle,
             slideDataList = slideDataList,
             onNewTitle = { newTitle ->
-                elements.add(Tree(SlideContentItem(text = newTitle, sideLabel = null), emptyList()))
+                elements.add(Tree(SlideContentItem(text = newTitle, sideLabel = null, disposition = disposition), emptyList()))
             },
         ).groupContent()
     }
