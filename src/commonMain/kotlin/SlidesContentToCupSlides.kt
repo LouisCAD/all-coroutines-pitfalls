@@ -57,9 +57,17 @@ private fun Title(
         )
     }
     slideTitle?.let {
-        Text(text = it.text, style = MaterialTheme.typography.displayLarge)
+        Text(
+            text = it.text,
+            Modifier.align(Alignment.CenterHorizontally),
+            style = MaterialTheme.typography.displayLarge
+        )
         it.subtitle?.let { text ->
-            Text(text = text, style = MaterialTheme.typography.displayMedium)
+            Text(
+                text = text,
+                Modifier.align(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.displayMedium
+            )
         }
     }
 }

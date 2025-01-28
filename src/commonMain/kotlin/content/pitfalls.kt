@@ -56,10 +56,20 @@ private fun SlidesBuilder.pitfallsPartOne() = "Coroutines pitfalls (part 1)".sli
     "TK Wrong Dispatcher".slidesGroup {
         "Overuse Dispatchers.IO".sideBySide {
             "Wrong use".slide {
-                "Non blocking I/O "()
+                "Non blocking I/O"()
+                "CPU-bound work"()
+                "Everything, just in case"()
             }
             "Correct usage".slide {
-
+                "Wrapping blocking I/O sections"()
+                "Wrapping IPC calls" {
+                    "Some system calls, often in Android's `Managers`"(sideLabel = "Inter-Process Communication") {
+                        "packageManager"()
+                        "DownloadManager"()
+                        "…"()
+                    }
+                    "Jump into the source to see if it's connecting to a Service"()
+                }
             }
         }
         //TODO: Elaborate
