@@ -1,4 +1,3 @@
-import androidx.collection.MutableIntList
 import dsl.SideBySideDelivery
 import dsl.model.SlideData
 
@@ -17,7 +16,9 @@ class SideBySideStepRetriever(data: SlideData.SideBySide) {
 
     private val stepCounts: List<Int> = data.slides.map { it.content.stepsCount() }
     val stepCount = stepCounts.sum()
-    private val columnLocalSteps: List<MutableIntList> = data.slides.map { MutableIntList(initialCapacity = stepCount) }
+
+    //TODO: Use MutableIntList from androidx.collection when it doesn't crash WASM-JS compilation (last checked in version 1.5.0-beta02)
+    private val columnLocalSteps: List<MutableList<Int>> = data.slides.map { ArrayList<Int>(stepCount) }
 
     init {
         var lineIndex = 0

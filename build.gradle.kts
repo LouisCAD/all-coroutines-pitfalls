@@ -36,7 +36,6 @@ kotlin {
 
 //            implementation("org.kodein.emoji:emoji-compose-m2:2.1.0")
             implementation("org.kodein.emoji:emoji-compose-m3:2.0.1")
-            implementation("androidx.collection:collection:1.4.5")
         }
     }
 }
