@@ -30,14 +30,18 @@ private fun SlidesBuilder.definitions() {
             overviewTitle = "routine vs coroutine"
         ) {
             "routine".slide(Bullets) {
-                "The calling thread is blocked/monopolized until it's done" {
-                    "Callbacks are required for asynchronous operations"()
+                "The calling thread is **blocked**" {
+                    "Monopolizing: Only one per thread"()
+                    "**Callbacks** are required for async work"()
                 }
+                "Pretty cool 👍"()
             }
             "coroutine".slide(Bullets) {
-                "Can suspend its execution to let other ones run, and resume later on" {
-                    "Callbacks are *not* needed"()
+                "Can **suspend** its execution, and **resume** later on" {
+                    "Lets **other ones run** while suspended"()
+                    "**Callbacks not needed**"()
                 }
+                "Really better 👍👍👍"()
             }
         }
         "Why do we want to avoid callbacks?".slide(Bullets) {

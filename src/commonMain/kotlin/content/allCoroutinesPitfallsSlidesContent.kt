@@ -1,6 +1,7 @@
 package content
 
 import buildSlides
+import dsl.Disposition
 import dsl.SlidesBuilder
 import dsl.TextContentKind
 
@@ -17,7 +18,7 @@ fun allCoroutinesPitfallsSlidesContent() = buildSlides {
 }
 
 private fun SlidesBuilder.getReady() {
-    "Turn on your brain! 🧠⚡️".slide {
+    "Turn on your brain! 🧠⚡️".slide(Disposition.List.BigCentered) {
         "Dozens of pitfalls to cover"()
         "Only 40 minutes"()
     }

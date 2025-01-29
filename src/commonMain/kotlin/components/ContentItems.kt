@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import dsl.Disposition
@@ -54,10 +55,13 @@ private fun ContentItems(
             Disposition.Bullets.Abc -> "${ALPHABET[i]}. "
             Disposition.Bullets -> "• "
             Disposition.Bullets.Numbers -> "${i + 1}. "
+            Disposition.Bullets.Arrow -> "→ "
+            Disposition.Bullets.Invisible -> "   "
             is Disposition.List -> ""
         }
         val textStyle = when (disposition) {
             is Disposition.Bullets -> MaterialTheme.typography.bodyLarge
+            Disposition.List.BigCentered -> MaterialTheme.typography.displayMedium
             is Disposition.List -> when (depth) {
                 0 -> MaterialTheme.typography.titleLarge
                 1 -> MaterialTheme.typography.titleMedium
@@ -74,6 +78,7 @@ private fun ContentItems(
                 radius = 12.dp * blurFactor,
                 edgeTreatment = BlurredEdgeTreatment.Unbounded
             ),
+            textAlign = if (disposition is Disposition.List.BigCentered) TextAlign.Center else null,
             style = textStyle
         )
         index++

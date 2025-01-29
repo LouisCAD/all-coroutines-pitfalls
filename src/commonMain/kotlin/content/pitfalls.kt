@@ -107,8 +107,12 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
         //TODO: Add bad examples, with correction/good examples.
     }
     "🤪 Making a messed-up CoroutineContext".slide {
-        "Replacing the `Job` of a `CoroutineContext`" {
-            "It disconnects it from the original hierarchy, and breaking the structured concurreny chain"()
+        "Replacing the `Job` of a `CoroutineContext`"(Bullets) {
+            "Disconnects the coroutine from the original hierarchy" {
+                "Breaks \"structured concurreny\""()
+                "Silently **prevents cancellation propagation**"()
+                "Very very bad 👿 😵 💀"()
+            }
         }
     }
     "CoroutineScope pitfalls".slidesGroup(disposition = Bullets) {
@@ -170,5 +174,27 @@ private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
             }
         }
     }
-    "Confusing Events and States".slide { }
+    "Events vs States".slidesGroup {
+        "Confusing Events and States".slide(Bullets.Invisible) {
+            "**Event**:" {
+                "Happens, then becomes history."()
+                "Something that **causes changes** to the state."()
+            }
+            "**State**:" {
+                "How the system is at **any** given moment."()
+            }
+        }
+        "Using the wrong sharing operator".slide {
+            "Correct usage:"(Bullets.Invisible) {
+                "`stateIn(…)`"(Bullets.Arrow) {
+                    "For **States**"()
+                }
+                "`shareIn(…)`"(Bullets.Arrow) {
+                    "Preferrably for **Events**"()
+                    "Technically work for states too"()
+                }
+            }
+        }
+
+    }
 }

@@ -39,7 +39,7 @@ fun PresentationTheme(content: @Composable () -> Unit) {
                 headlineLarge = headlineLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold),
                 headlineMedium = headlineMedium.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold),
                 headlineSmall = headlineSmall.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold),
-                titleLarge = titleLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
+                titleLarge = titleLarge.copy(fontFamily = avenirNext, fontWeight = FontWeight.SemiBold),
                 titleMedium = titleMedium.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
                 titleSmall = titleSmall.copy(fontFamily = avenirNext, fontWeight = FontWeight.Medium),
                 bodyLarge = bodyLarge.copy(fontFamily = helveticaNeue, fontWeight = FontWeight.Medium),
