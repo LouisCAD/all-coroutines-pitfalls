@@ -8,10 +8,8 @@
 4. Add new dispositions:
     1. "Big answer": packed + centered
 5. Titles
-   1. Remove body and put everything in the title when is SlideContent.SingleElement (and rename it to TitlesOnly or something)
-   2. Ensure subtitles are shown
-   3. Animate for startCentered https://stackoverflow.com/a/70031663
-   4. Display parentTitles within fewer space
+   1. Animate for startCentered https://stackoverflow.com/a/70031663
+   2. Display parentTitles within fewer space
 6. Text
     1. Change the style based on the depth and disposition
     2. Add some color

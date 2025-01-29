@@ -101,7 +101,7 @@ class DefaultCupSlidesMaker(
             is SlideContent.TitlesOnly -> Unit
             is SlideContent.Elements -> {
                 Spacer(Modifier.height(spacing))
-                body(content, step - 1)
+                body(content, step)
             }
         }
     }
