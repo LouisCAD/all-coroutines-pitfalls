@@ -39,10 +39,24 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
     "Improper bridging".slidesGroup {
         "Missing/breaking cancellation support".slide {
             "Using `suspendCoroutine` instead of `suspendCancellableCoroutine`"()
-            "Forgetting to forward the cancellation signal"()
+            "Forgetting to forward the cancellation signal" {
+                "2 solutions:"(Bullets.Abc) {
+                    "Use `continuation.invokeOnCancellation { … }`"()
+                    "Wrap it all with a `try` block, and cancel in the `finally` block"()
+                }
+            }
         }
         "Call resume() more than once".slide {
-            "Using `suspendCancellableCoroutine` instead of `callbackFlow` for repeat callbacks"()
+            "Problem:"(Bullets) {
+                "You have a **repeat callback**"()
+                "You use `suspendCancellableCoroutine`"()
+                "The callback fires once"()
+                "The callback fires _again_…"()
+                "Fire 🔥"()
+            }
+            "Solution:"(Bullets) {
+                "Use `callbackFlow`"()
+            }
         }
     }
     "Underuse".sideBySide {
@@ -55,7 +69,9 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
             "Using callback APIs, with proper bridging"()
         }
     }
-    "❌❌❌ Wrong Dispatcher".slidesGroup {
+    "❌❌❌ Wrong Dispatcher".slidesGroup(
+        smallTitle = "Wrong Dispatcher"
+    ) {
         "The 3-ish Dispatchers that matter".slide {
             "Dispatchers.Main" {
                 "Touching the UI"()

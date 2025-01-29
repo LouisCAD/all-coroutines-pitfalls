@@ -56,14 +56,25 @@ private fun ContentItems(
             Disposition.Bullets.Numbers -> "${i + 1}. "
             is Disposition.List -> ""
         }
+        val textStyle = when (disposition) {
+            is Disposition.Bullets -> MaterialTheme.typography.bodyLarge
+            is Disposition.List -> when (depth) {
+                0 -> MaterialTheme.typography.titleLarge
+                1 -> MaterialTheme.typography.titleMedium
+                2 -> MaterialTheme.typography.titleSmall
+                3 -> MaterialTheme.typography.bodyLarge
+                4 -> MaterialTheme.typography.bodyMedium
+                5 -> MaterialTheme.typography.bodySmall
+                else -> MaterialTheme.typography.bodySmall
+            }
+        }
         Txt(
             text = prefix + tree.data.text,
             modifier = modifier.blur(
                 radius = 12.dp * blurFactor,
                 edgeTreatment = BlurredEdgeTreatment.Unbounded
             ),
-            style = MaterialTheme.typography.bodyLarge
-            //TODO: Vary the style based on depth and disposition
+            style = textStyle
         )
         index++
         index += ContentItems(

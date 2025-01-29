@@ -1,8 +1,6 @@
 package components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,24 +25,29 @@ fun Title(
         targetTitle = slideTitle
         parentTitles
     }.map { it.smallTitle ?: it.text }.filter { it.isNotEmpty() }
+
+    val parentTitlesTextStyle = MaterialTheme.typography.titleSmall
+    val titleTextStyle = MaterialTheme.typography.displayLarge
+    val subtitleTextStyle = MaterialTheme.typography.headlineSmall
     if (targetParentTitles.isNotEmpty()) {
         val text = targetParentTitles.joinToString(separator = " > ")
         Txt(
             text = text,
-            style = MaterialTheme.typography.titleSmall
+            style = parentTitlesTextStyle
         )
+        Spacer(Modifier.height(8.dp))
     }
     targetTitle?.let {
         Txt(
             text = it.text,
             Modifier.align(Alignment.CenterHorizontally),
-            style = MaterialTheme.typography.displayLarge
+            style = titleTextStyle
         )
         it.subtitle?.let { text ->
             Txt(
                 text = text,
                 Modifier.align(Alignment.CenterHorizontally),
-                style = MaterialTheme.typography.headlineSmall
+                style = subtitleTextStyle
             )
         }
     }
