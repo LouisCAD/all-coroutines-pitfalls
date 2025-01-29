@@ -10,7 +10,7 @@ sealed interface SlideContent {
         val elements: List<Tree<SlideContentItem>>
     ) : SlideContent
 
-    data class SingleElement(
+    data class TitlesOnly(
         val contentKind: TextContentKind
     ) : SlideContent
 }

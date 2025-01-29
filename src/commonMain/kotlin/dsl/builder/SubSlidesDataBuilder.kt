@@ -25,7 +25,7 @@ class SubSlidesDataBuilder(
                 smallTitle = null,
                 subtitle = subtitle
             ),
-            content = SlideContent.SingleElement(
+            content = SlideContent.TitlesOnly(
                 contentKind = contentKind
             )
         )

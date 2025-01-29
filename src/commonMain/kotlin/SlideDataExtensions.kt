@@ -9,7 +9,7 @@ fun SlideData.slideName(index: Int): String {
 
 fun SlideContent.stepsCount(): Int = when (this) {
     is SlideContent.Elements -> this.elements.sumOf { it.countSteps() }
-    is SlideContent.SingleElement -> 0
+    is SlideContent.TitlesOnly -> 0
 }
 
 fun Tree<SlideContentItem>.countSteps(): Int {

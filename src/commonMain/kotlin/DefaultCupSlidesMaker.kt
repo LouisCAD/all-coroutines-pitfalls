@@ -14,7 +14,7 @@ class DefaultCupSlidesMaker(
     private val title: @Composable ColumnScope.(
         parent: List<SlideTitle>,
         SlideTitle?,
-        content: SlideContent.SingleElement?
+        content: SlideContent.TitlesOnly?
     ) -> Unit,
     private val body: @Composable ColumnScope.(
         content: SlideContent,
@@ -96,9 +96,9 @@ class DefaultCupSlidesMaker(
         content: SlideContent,
         step: Int
     ) {
-        title(parentTitles, currentTitle, content as? SlideContent.SingleElement)
+        title(parentTitles, currentTitle, content as? SlideContent.TitlesOnly)
         when (content) {
-            is SlideContent.SingleElement -> Unit
+            is SlideContent.TitlesOnly -> Unit
             is SlideContent.Elements -> {
                 Spacer(Modifier.height(spacing))
                 body(content, step - 1)

@@ -26,9 +26,7 @@ class SlidesDataBuilder private constructor(
                 smallTitle = null,
                 subtitle = subtitle
             ),
-            content = SlideContent.SingleElement(
-                contentKind = contentKind
-            )
+            content = SlideContent.TitlesOnly(contentKind = contentKind)
         )
     }
 
@@ -45,7 +43,7 @@ class SlidesDataBuilder private constructor(
         if (startCentered) slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = currentTitle,
-            content = SlideContent.SingleElement(contentKind = TextContentKind.CenteredTitle)
+            content = SlideContent.TitlesOnly(contentKind = TextContentKind.CenteredTitle)
         )
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
@@ -66,7 +64,7 @@ class SlidesDataBuilder private constructor(
         slideDataList += SlideData.Single(
             parentTitles = parentTitles,
             currentTitle = slideTitle,
-            content = SlideContent.SingleElement(contentKind = contentKind)
+            content = SlideContent.TitlesOnly(contentKind = contentKind)
         )
         SlidesDataBuilder(
             parentTitles = parentTitles + slideTitle,

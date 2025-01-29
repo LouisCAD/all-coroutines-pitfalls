@@ -16,7 +16,7 @@ import dsl.model.SlideTitle
 fun Title(
     parentTitles: List<SlideTitle>,
     slideTitle: SlideTitle?,
-    content: SlideContent.SingleElement?
+    content: SlideContent.TitlesOnly?
 ) = Column(
     modifier = Modifier.fillMaxWidth().let { if (content == null) it else it.fillMaxHeight() },
     verticalArrangement = if (content == null) Arrangement.Top else Arrangement.Center

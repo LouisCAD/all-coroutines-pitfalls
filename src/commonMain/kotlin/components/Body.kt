@@ -30,7 +30,7 @@ fun Body(
                 step = step
             )
         }
-        is SlideContent.SingleElement -> Box(modifier) {
+        is SlideContent.TitlesOnly -> Box(modifier) {
             val textStyle = when (content.contentKind) {
                 TextContentKind.BigFact -> MaterialTheme.typography.displayLarge
                 TextContentKind.CenteredTitle -> MaterialTheme.typography.displayLarge
