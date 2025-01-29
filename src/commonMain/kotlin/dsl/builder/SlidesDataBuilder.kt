@@ -115,6 +115,7 @@ class SlidesDataBuilder private constructor(
         slideDataList += SlideData.SideBySide(
             parentTitles = parentTitles,
             currentTitle = slideTitleOrNull(title = title, subtitle = subtitle),
+            overviewTitle = overviewTitle,
             delivery = delivery,
             slides = SubSlidesDataBuilder().apply(block).build()
         )

@@ -25,7 +25,10 @@ private fun SlidesBuilder.definitions() {
             "Coroutines cooperate to run without blocking each other"()
             "It's a suspendable function, while it's being run"()
         }
-        sideBySide(delivery = SideBySideDelivery.PerLine) {
+        sideBySide(
+            delivery = SideBySideDelivery.PerLine,
+            overviewTitle = "routine vs coroutine"
+        ) {
             "routine".slide(Bullets) {
                 "The calling thread is blocked/monopolized until it's done" {
                     "Callbacks are required for asynchronous operations"()

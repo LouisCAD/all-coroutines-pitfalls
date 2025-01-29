@@ -19,6 +19,7 @@ sealed interface SlideData {
     data class SideBySide(
         override val parentTitles: List<SlideTitle>,
         override val currentTitle: SlideTitle?,
+        val overviewTitle: String?,
         val delivery: SideBySideDelivery,
         val slides: List<SubSlide>
     ) : SlideData, TopLevel, WithParentTitles

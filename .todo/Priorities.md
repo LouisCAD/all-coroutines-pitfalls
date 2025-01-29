@@ -1,17 +1,16 @@
 # Priorities
 
 1. Finish filling Flow pitfalls
-2. Start integrating code into the slides.
-    1. Check how animations work
-3. Add illustrations for basics
+2. Add images
     1. Edit the DSL to support custom Composables or images
+    2. Add illustrations for basics
+3. Start integrating code into the slides.
+    1. Check how animations work
 4. Add new dispositions:
     1. "Big answer": packed + centered
 5. Titles
    1. Animate for startCentered https://stackoverflow.com/a/70031663
    2. Display parentTitles within fewer space
 6. Text
-    1. Change the style based on the depth and disposition
-    2. Add some color
-    3. Ensure we have emojis work on WASM.
-7. Debug spacing by putting a unique background color before padding and after spacer's height
+    1. Add some color
+    2. Ensure we have emojis work on WASM.

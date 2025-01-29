@@ -22,14 +22,7 @@ fun Title(
     verticalArrangement = if (content == null) Arrangement.Top else Arrangement.Center
 //    verticalArrangement = Arrangement.spacedBy(4.dp)
 ) {
-    val targetTitle: SlideTitle?
-    val targetParentTitles: List<String> = if (slideTitle == null) {
-        targetTitle = parentTitles.lastOrNull()
-        parentTitles.dropLast(1)
-    } else {
-        targetTitle = slideTitle
-        parentTitles
-    }.map { it.smallTitle ?: it.text }.filter { it.isNotEmpty() }
+    val targetParentTitles: List<String> = parentTitles.map { it.smallTitle ?: it.text }.filter { it.isNotEmpty() }
 
     val parentTitlesTextStyle = MaterialTheme.typography.titleSmall
     val titleTextStyle = when (content?.contentKind) {
@@ -48,7 +41,7 @@ fun Title(
         )
         Spacer(Modifier.height(8.dp))
     }
-    targetTitle?.let {
+    slideTitle?.let {
         Txt(
             text = it.text,
             Modifier.align(Alignment.CenterHorizontally),
