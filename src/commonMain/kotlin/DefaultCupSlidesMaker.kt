@@ -60,9 +60,12 @@ class DefaultCupSlidesMaker(
                                     globalStep = globalStep - 1
                                 )
                                 Column(Modifier.fillMaxHeight().weight(1f)) {
-                                    title(emptyList(), subSlide.currentTitle, subSlide.content as? SlideContent.SingleElement)
-                                    Spacer(Modifier.height(spacing))
-                                    body(subSlide.content, step)
+                                    Content(
+                                        parentTitles = emptyList(),
+                                        currentTitle = subSlide.currentTitle,
+                                        content = subSlide.content,
+                                        step = step
+                                    )
                                 }
                             }
                         }
@@ -75,10 +78,30 @@ class DefaultCupSlidesMaker(
                 specs = SlideSpecs()
             ) { step ->
                 Column(slideRootModifier) {
-                    title(data.parentTitles, data.currentTitle, data.content as? SlideContent.SingleElement)
-                    Spacer(Modifier.height(spacing))
-                    body(data.content, step - 1)
+                    Content(
+                        parentTitles = data.parentTitles,
+                        currentTitle = data.currentTitle,
+                        content = data.content,
+                        step = step - 1
+                    )
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun ColumnScope.Content(
+        parentTitles: List<SlideTitle>,
+        currentTitle: SlideTitle?,
+        content: SlideContent,
+        step: Int
+    ) {
+        title(parentTitles, currentTitle, content as? SlideContent.SingleElement)
+        when (content) {
+            is SlideContent.SingleElement -> Unit
+            is SlideContent.Elements -> {
+                Spacer(Modifier.height(spacing))
+                body(content, step - 1)
             }
         }
     }

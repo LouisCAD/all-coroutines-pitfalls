@@ -37,9 +37,6 @@ fun Body(
                 TextContentKind.NewSection -> MaterialTheme.typography.displayLarge
                 TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
             }
-            currentTitle?.let {
-                Txt(it.text, Modifier.align(Alignment.Center), style = textStyle)
-            }
         }
     }
 }

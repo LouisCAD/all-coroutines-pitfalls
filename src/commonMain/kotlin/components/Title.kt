@@ -19,6 +19,7 @@ fun Title(
     content: SlideContent.SingleElement?
 ) = Column(
     modifier = Modifier.fillMaxWidth().let { if (content == null) it else it.fillMaxHeight() },
+    verticalArrangement = if (content == null) Arrangement.Top else Arrangement.Center
 //    verticalArrangement = Arrangement.spacedBy(4.dp)
 ) {
     val targetTitle: SlideTitle?
@@ -31,7 +32,13 @@ fun Title(
     }.map { it.smallTitle ?: it.text }.filter { it.isNotEmpty() }
 
     val parentTitlesTextStyle = MaterialTheme.typography.titleSmall
-    val titleTextStyle = MaterialTheme.typography.displayLarge
+    val titleTextStyle = when (content?.contentKind) {
+        null -> MaterialTheme.typography.displayLarge
+        TextContentKind.BigFact -> MaterialTheme.typography.displayLarge
+        TextContentKind.CenteredTitle -> MaterialTheme.typography.displayLarge
+        TextContentKind.NewSection -> MaterialTheme.typography.displayLarge
+        TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
+    }
     val subtitleTextStyle = MaterialTheme.typography.headlineSmall
     if (targetParentTitles.isNotEmpty()) {
         Txt(
@@ -40,16 +47,6 @@ fun Title(
             fontStyle = FontStyle.Italic
         )
         Spacer(Modifier.height(8.dp))
-    }
-    if (content != null) {
-        val textStyle = when (content.contentKind) {
-            TextContentKind.BigFact -> MaterialTheme.typography.displayLarge
-            TextContentKind.CenteredTitle -> MaterialTheme.typography.displayLarge
-            TextContentKind.NewSection -> MaterialTheme.typography.displayLarge
-            TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
-        }
-        //TODO: Do what's right outside, or here, or both
-
     }
     targetTitle?.let {
         Txt(
