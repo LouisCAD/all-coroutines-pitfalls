@@ -1,8 +1,8 @@
 plugins {
-    kotlin("multiplatform") version "2.0.20"
-    kotlin("plugin.compose") version "2.0.20"
-    id("org.jetbrains.compose") version "1.6.11"
-    id("net.kodein.cup") version "1.0.0-Beta-09"
+    kotlin("multiplatform") version "2.1.10"
+    kotlin("plugin.compose") version "2.1.10"
+    id("org.jetbrains.compose") version "1.7.3"
+    id("net.kodein.cup") version "1.0.0-Beta-11"
 }
 
 cup {

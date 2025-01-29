@@ -37,7 +37,7 @@ object MyStyleSheet : SpanStyleSheet() {
 }
 
 @Composable
-private fun Link(
+fun Link(
     text: String,
     url: String
 ) {
@@ -81,7 +81,7 @@ val todo by Slide(
 
     AnimatedVisibility(
         visible = step >= 3,
-        enter = scaleIn(spring(Spring.DampingRatioHighBouncy, Spring.StiffnessMediumLow)) + expandVertically(clip = false)
+        enter = scaleIn(spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessMediumLow)) + expandVertically(clip = false)
     ) {
         TextWithNotoAnimatedEmoji(
             text = "${Emoji.Sparkles} Start creating! ${Emoji.Sparkles}",

@@ -28,7 +28,7 @@ val intro by Slide {
     )
 
     Text(
-        text = "Hello, friend!",
+        text = "🧨 All* coroutines pitfalls",
         style = MaterialTheme.typography.displayLarge
     )
     TextWithPlatformEmoji(styled { "Welcome to ${+b}Compose ur Pres${-b}! ${Emoji.Wink}" })
