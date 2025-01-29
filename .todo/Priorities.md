@@ -13,9 +13,7 @@
    3. Animate for startCentered https://stackoverflow.com/a/70031663
    4. Display parentTitles within fewer space
 6. Text
-    1. Support formatting (create a custom Text composable)
-        1. Try getting inspiration from ResumeComposition to convert to AnnotatedString or CuP stuff.
-        2. Ensure we have emojis work on WASM.
-    2. Change the style based on the depth and disposition
-    3. Add some color
+    1. Change the style based on the depth and disposition
+    2. Add some color
+    3. Ensure we have emojis work on WASM.
 7. Debug spacing by putting a unique background color before padding and after spacer's height
