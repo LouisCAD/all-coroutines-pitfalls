@@ -18,7 +18,16 @@ fun allCoroutinesPitfallsSlidesContent() = buildSlides {
 }
 
 private fun SlidesBuilder.getReady() {
-    "Turn on your brain! 🧠⚡️".slide(Disposition.List.BigCentered) {
+    "Turn on your brain! 🧠⚡️".slide(
+        Disposition.List.BigCentered,
+        subtitle = "Friendly disclaimer | Setting the expectations"
+    ) {
+        "Very technical" {
+            "Hopefully very helpful too"()
+        }
+        "First time I make this presentation" {
+            "Lacks illustrations"()
+        }
         "Dozens of pitfalls to cover"()
         "Only 40 minutes"()
     }

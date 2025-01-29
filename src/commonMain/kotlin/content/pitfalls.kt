@@ -195,6 +195,10 @@ private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
                 }
             }
         }
-
+    }
+    "Forgetting the terminal operator".slide {
+        "Mistake examples"(Bullets) {
+            "`transformLatest` without `first()`"()
+        }
     }
 }
