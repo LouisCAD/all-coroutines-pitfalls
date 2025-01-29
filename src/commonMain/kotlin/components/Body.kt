@@ -40,7 +40,7 @@ fun Body(
                 TextContentKind.PresentationOpening -> MaterialTheme.typography.displayLarge
             }
             currentTitle?.let {
-                Text(it.text, Modifier.align(Alignment.Center), style = textStyle)
+                Txt(it.text, Modifier.align(Alignment.Center), style = textStyle)
             }
         }
     }

@@ -14,7 +14,7 @@ fun SlidesBuilder.coroutinesQuickIntro() {
 }
 
 private fun SlidesBuilder.definitions() {
-    "Let's talk definitions".slidesGroup(
+    "Let's talk **definitions**".slidesGroup(
         smallTitle = "Definitions",
         subtitle = "To make sure we're on the same page",
     ) {
@@ -86,7 +86,7 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             "Their hidden power: cancellation".slide {
                 "brought by kotlinx.coroutines"()
                 "propagates automatically"()
-                "powered by \"Job\""()
+                "powered by `Job`"()
             }
         }
         "What's a coroutine again?".slide {
@@ -97,7 +97,7 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             "Call `launch { … }` or `async { … }`"()
         }
         "How to stop a coroutine?".slide {
-            "Call cancel() at the right place"()
+            "Call `cancel()` at the right place"()
             "Use a construct that will do it automatically" {
                 "`***Latest` `Flow` operators"()
                 "`raceOf(…)`"()

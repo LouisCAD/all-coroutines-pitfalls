@@ -4,7 +4,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -56,12 +56,14 @@ private fun ContentItems(
             Disposition.Bullets.Numbers -> "${i + 1}. "
             is Disposition.List -> ""
         }
-        Text(
+        Txt(
             text = prefix + tree.data.text,
             modifier = modifier.blur(
                 radius = 12.dp * blurFactor,
                 edgeTreatment = BlurredEdgeTreatment.Unbounded
-            )
+            ),
+            style = MaterialTheme.typography.bodyLarge
+            //TODO: Vary the style based on depth and disposition
         )
         index++
         index += ContentItems(
