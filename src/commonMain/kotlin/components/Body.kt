@@ -16,8 +16,6 @@ import dsl.model.SlideTitle
 @Composable
 fun Body(
     modifier: Modifier,
-    parentTitles: List<SlideTitle>?,
-    currentTitle: SlideTitle?,
     content: SlideContent,
     step: Int
 ) {

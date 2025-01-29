@@ -8,7 +8,7 @@ import dsl.TextContentKind
 fun SlidesBuilder.coroutinesQuickIntro() {
     definitions()
     whyUseCoroutines()
-    "Coroutines are a _fundamentally_ new way to do all things asynchronous".slide(TextContentKind.BigFact)
+    "Coroutines are a _fundamentally_ new way to\ndo all things asynchronous".slide(TextContentKind.BigFact)
     kindsOfPitfalls()
     quickCoroutinesBasics()
 }

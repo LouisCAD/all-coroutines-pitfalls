@@ -2,7 +2,9 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import content.allCoroutinesPitfallsSlidesContent
 import net.kodein.cup.*
 import net.kodein.cup.laser.laser
@@ -26,7 +28,7 @@ fun main() = cupApplication(
             slides = Slides(allCoroutinesPitfallsSlidesContent()),
             configuration = {
                 defaultSlideSpecs = SlideSpecs.default(LayoutDirection.Ltr).copy(
-                    size = SLIDE_SIZE_16_9
+                    size = DpSize(width = 640.dp, height = 360.dp) * 1.2f
                 )
                 // TODO: Configure plugins
                 speakerWindow()

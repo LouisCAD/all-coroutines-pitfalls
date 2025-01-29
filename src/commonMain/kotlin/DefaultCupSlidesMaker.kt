@@ -13,11 +13,10 @@ class DefaultCupSlidesMaker(
     private val spacing: Dp = 16.dp,
     private val title: @Composable ColumnScope.(
         parent: List<SlideTitle>,
-        SlideTitle?
+        SlideTitle?,
+        content: SlideContent.SingleElement?
     ) -> Unit,
     private val body: @Composable ColumnScope.(
-        parentTitles: List<SlideTitle>?,
-        currentTitle: SlideTitle?,
         content: SlideContent,
         step: Int
     ) -> Unit,
@@ -49,7 +48,7 @@ class DefaultCupSlidesMaker(
                     specs = SlideSpecs()
                 ) { globalStep ->
                     Column(slideRootModifier) {
-                        title(data.parentTitles, data.currentTitle)
+                        title(data.parentTitles, data.currentTitle, null)
                         Row(
                             modifier = Modifier.fillMaxWidth().weight(1f),
                             horizontalArrangement = Arrangement.SpaceEvenly
@@ -61,9 +60,9 @@ class DefaultCupSlidesMaker(
                                     globalStep = globalStep - 1
                                 )
                                 Column(Modifier.fillMaxHeight().weight(1f)) {
-                                    title(emptyList(), subSlide.currentTitle)
+                                    title(emptyList(), subSlide.currentTitle, subSlide.content as? SlideContent.SingleElement)
                                     Spacer(Modifier.height(spacing))
-                                    body(null, subSlide.currentTitle, subSlide.content, step)
+                                    body(subSlide.content, step)
                                 }
                             }
                         }
@@ -76,11 +75,9 @@ class DefaultCupSlidesMaker(
                 specs = SlideSpecs()
             ) { step ->
                 Column(slideRootModifier) {
-                    if (data.content !is SlideContent.SingleElement) {
-                        title(data.parentTitles, data.currentTitle)
-                    }
+                    title(data.parentTitles, data.currentTitle, data.content as? SlideContent.SingleElement)
                     Spacer(Modifier.height(spacing))
-                    body(data.parentTitles, data.currentTitle, data.content, step - 1)
+                    body(data.content, step - 1)
                 }
             }
         }

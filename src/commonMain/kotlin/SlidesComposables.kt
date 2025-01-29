@@ -14,14 +14,12 @@ fun buildSlides(
 }
 
 val defaultCupSlidesMaker: CupSlidesMaker = DefaultCupSlidesMaker(
-    title = { parentTitles, slideTitle ->
-        Title(parentTitles = parentTitles, slideTitle = slideTitle)
+    title = { parentTitles, slideTitle, content ->
+        Title(parentTitles = parentTitles, slideTitle = slideTitle, content = content)
     },
-    body = { parentTitles, currentTitle, content, step ->
+    body = { content, step ->
         Body(
             modifier = Modifier.fillMaxWidth().weight(1f),
-            parentTitles = parentTitles,
-            currentTitle = currentTitle,
             content = content,
             step = step
         )

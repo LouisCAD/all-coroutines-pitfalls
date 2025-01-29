@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun Txt(
@@ -15,11 +16,13 @@ fun Txt(
     modifier: Modifier = Modifier,
     style: TextStyle,
     fontStyle: FontStyle? = null,
+    textAlign: TextAlign? = null
 ) {
     Text(
         text = text.withMarkdownFormatting(),
         modifier = modifier,
         style = style,
+        textAlign = textAlign,
         fontStyle = fontStyle
     )
 }

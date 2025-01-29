@@ -91,19 +91,15 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
                 "Everything, just in case"()
             }
             "Correct usage".slide {
-                "Wrapping blocking I/O sections" {
+                "Wrap blocking I/O sections"(Bullets) {
                     "File I/O"()
+                    "Local database access"()
                     "Blocking I/O that has no asynchronous/suspending alternative"()
-                    "IPC (Inter-Process Communication)" {
-                        "Some system calls, often in Android's `Managers`"(sideLabel = "Inter-Process Communication") {
-                            "packageManager"()
-                            "DownloadManager"()
-                            "…"()
-                        }
-                        "Jump into the source to see if it's connecting to a Service"()
-                    }
                 }
-                "Wrapping IPC calls" {
+                "Wrap IPC (Inter-Process Communication)"(Bullets) {
+                    "Some system calls"()
+                    "Communicating with other apps"()
+                    "Peek at the source when possible"()
                 }
             }
         }
