@@ -73,23 +73,25 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
     "❌❌❌ Wrong Dispatcher".slidesGroup(
         smallTitle = "Wrong Dispatcher"
     ) {
-        "The 3-ish Dispatchers that matter".slide {
+        "The 3-ish Dispatchers that matter".slide(Bullets) {
             "Dispatchers.Main" {
                 "Touching the UI"()
                 "Synchronizing state on a single thread"()
             }
             "Dispatchers.Default" {
-            //TODO: Fill content
-
+                "CPU-bound work" {
+                    "incl. heavy allocation"()
+                }
             }
             "Dispatchers.IO" {
-            //TODO: Fill content
-
+                "For **blocking** I/O"()
             }
-            //TODO: Fill content
         }
-        "Underusing Dispatchers.IO".sideBySide {
-            //TODO: Fill content
+        "Underusing Dispatchers.IO".slide(Bullets) {
+            "Using `Dispatchers.Default` or `Dispatchers.Main` for…" {
+                "Blocking APIs that do I/O"()
+                "Blocking APIs that _might_ do I/O"()
+            }
         }
         "Overusing Dispatchers.IO".sideBySide {
             "Wrong use".slide {
@@ -123,31 +125,37 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
         }
     }
     "CoroutineScope pitfalls".slidesGroup(disposition = Bullets) {
-        "Using GlobalScope".slide {
-            //TODO: Illustrate
-
-        }
-        "Using the wrong `CoroutineScope`".slide {
-            "Many ways to get a `CoroutineScope`"()
-            "Only a few ways to get the right one"()
-        }
-        "Confusing coroutineScope and CoroutineScope".slide {
-            //TODO: Illustrate
-        }
-        "launching a coroutine in a scope being cancelled".slide {
-            //TODO: Illustrate
-        }
         "👶 ➡️ 🍽️ ➡️ 🐺 Orphan coroutines eaten".slidesGroup {
             "🚛 🗑️ Don't let your coroutines be garbage collected!".slide {
-                "Some callback APIs might use `WeakReference` under the hood" {
+                "Some callback APIs might use `WeakReference` under the hood"(Bullets) {
                     "Like Android's" {
                         "MediaPlayer"()
                         "SharedPreferences"()
                     }
                 }
+                "Solutions"(Bullets) {
+                    "Create a local `coroutineScope { … }`"()
+                    "Use system integration scopes" {
+                        "`lifecycleScope`"()
+                        "`viewModelScope`"()
+                    }
+                    "Always make sure custom `CoroutineScope` are strongly referenced"()
+                }
                 //TODO: Explain the problem
             }
         }
+        "Using GlobalScope".slide(disposition = Bullets) {
+            "Bad father" {
+                "Doesn't remember about children"()
+                "Can't cancel child coroutines"()
+            }
+        }
+        "Using the wrong `CoroutineScope`".slide {
+            "Many ways to get a `CoroutineScope`"()
+            "Only a few ways to get the right one"()
+        }
+        "Confusing coroutineScope and CoroutineScope".slide()
+        "launching a coroutine in a scope being cancelled".slide()
     }
     "Wrong function signatures".slide {
         "Missing the point: Suspend functions that take success and failure callbacks"()
