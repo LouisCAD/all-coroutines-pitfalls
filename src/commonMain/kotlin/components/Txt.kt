@@ -7,17 +7,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 
 @Composable
 fun Txt(
     text: String,
     modifier: Modifier = Modifier,
-    style: TextStyle
+    style: TextStyle,
+    fontStyle: FontStyle? = null,
 ) {
     Text(
         text = text.withMarkdownFormatting(),
         modifier = modifier,
-        style = style
+        style = style,
+        fontStyle = fontStyle
     )
 }
 

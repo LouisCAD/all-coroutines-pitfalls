@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dsl.model.SlideTitle
 
@@ -30,10 +31,10 @@ fun Title(
     val titleTextStyle = MaterialTheme.typography.displayLarge
     val subtitleTextStyle = MaterialTheme.typography.headlineSmall
     if (targetParentTitles.isNotEmpty()) {
-        val text = targetParentTitles.joinToString(separator = " > ")
         Txt(
-            text = text,
-            style = parentTitlesTextStyle
+            text = targetParentTitles.joinToString(separator = " > "),
+            style = parentTitlesTextStyle,
+            fontStyle = FontStyle.Italic
         )
         Spacer(Modifier.height(8.dp))
     }
