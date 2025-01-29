@@ -34,8 +34,7 @@ fun main() = cupApplication(
 
     PresentationTheme {
         Presentation(
-//            slides = presentationSlides,
-            slides = Slides(mrbIntroSlides() + allCoroutinesPitfallsSlidesContent()),
+            slides = Slides(mrbIntroSlides() + allCoroutinesPitfallsSlidesContent() + outroSlides()),
             configuration = {
                 defaultSlideSpecs = SlideSpecs.default(LayoutDirection.Ltr).copy(
                     size = DpSize(width = 640.dp, height = 360.dp) * 1.2f
@@ -72,7 +71,17 @@ private fun mrbIntroSlides(): List<Slide> = listOf(
     ) {
         Image(
             painter = painterResource(drawableResource),
-            contentScale = ContentScale.FillBounds,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+private fun outroSlides(): List<Slide> = buildList {
+    this += Slide(name = "outro") {
+        Image(
+            painter = painterResource(Res.drawable.qrcode_kdrive),
+//            contentScale = ContentScale.FillBounds,
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )

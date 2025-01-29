@@ -3,6 +3,7 @@ package content
 import dsl.Disposition
 import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
+import dsl.TextContentKind
 
 fun SlidesBuilder.pitfalls() {
     kindsOfPitfalls(startCentered = true)
@@ -14,7 +15,7 @@ fun SlidesBuilder.kindsOfPitfalls(startCentered: Boolean = false) {
     "4 kinds of pitfalls".slide(Bullets.Abc, startCentered = startCentered) {
         "You don't know **what you want to do** exactly"()
         "You don't really know **what you're using**"()
-        "You didn't rethrow CancellationException"(sideLabel = "most common one!")
+        "You didn't rethrow `CancellationException`"(sideLabel = "most common one!")
         "You forgot something while doing a minor refactoring"()
     }
 }
@@ -78,8 +79,14 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
                 "Synchronizing state on a single thread"()
             }
             "Dispatchers.Default" {
-                
+            //TODO: Fill content
+
             }
+            "Dispatchers.IO" {
+            //TODO: Fill content
+
+            }
+            //TODO: Fill content
         }
         "Underusing Dispatchers.IO".sideBySide {
             //TODO: Fill content
@@ -152,6 +159,21 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
     "Concurrency not thought through".slide {
         "Unintendedly have the same function run twice in parallel"()
     }
+    "Missing opportunities to improve perfs".slide(Bullets.Numbers) {
+        "Embrace concurrency & parallelization"()
+        "Use caching (with appropriate strategy) when possible"()
+        "Consider pre-loading/fetching"()
+    }
+    "Missing existing coroutines integrations".slide(Bullets.Numbers) {
+        "await() function in "()
+        "Make façade APIs"()
+        "Abstract away complex sequences"()
+    }
+    "Missing opportunities to simplify the code".slide(Bullets.Numbers) {
+        "Extract functions"()
+        "Make façade APIs"()
+        "Abstract away complex sequences"()
+    }
 }
 
 private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
@@ -199,6 +221,29 @@ private fun SlidesBuilder.flowPitfalls(title: String) = title.slidesGroup(
     "Forgetting the terminal operator".slide {
         "Mistake examples"(Bullets) {
             "`transformLatest` without `first()`"()
+            "`onEach` without `collect()` or something"()
+        }
+        "Example scenarios"(Bullets) {
+            "…during refactoring" {
+                "After replacing `collect` with `transform`"()
+                "After replacing `collectLatest` with `transformLatest`"()
+            }
         }
     }
+    "Not understanding the operator".slide {
+        "Notoriously tricky ones"(Bullets) {
+            "`debounce(…)`"()
+            "`scan(…)`"()
+        }
+        "Solution"(Bullets) {
+            "Read the doc thoroughly 🤓"()
+            "Compose your own operator, if none fits your needs"()
+        }
+    }
+    "Not sharing a `Flow`".slide(Disposition.List.BigCentered) {
+        "Whenever it makes sense…"()
+        "use `stateIn` or `shareIn`"()
+        "That will avoid duplicate work"()
+    }
+    "Read `value` on a cold `StateFlow".slide(contentKind = TextContentKind.NewSection)
 }
