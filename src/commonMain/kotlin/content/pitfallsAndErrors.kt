@@ -5,7 +5,7 @@ import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
 import dsl.TextContentKind
 
-fun SlidesBuilder.pitfalls() {
+fun SlidesBuilder.pitfallsAndErrors() {
     kindsOfPitfalls(startCentered = true)
     pitfallsPartOne("Part 1: Coroutines pitfalls")
     flowPitfalls("Part 2: Coroutines' Flows pitfalls")

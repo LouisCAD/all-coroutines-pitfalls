@@ -45,6 +45,7 @@ private fun SlidesBuilder.definitions() {
             }
         }
         "Why do we want to avoid callbacks?".slide(Bullets) {
+            //TODO[illustration]: Messy cables linked together, or messy labels
             "They make everything more complicated!"()
             "Logic is spread all over the place" {
                 "The code can't be read linearly"()
@@ -60,11 +61,15 @@ private fun SlidesBuilder.definitions() {
 }
 
 private fun SlidesBuilder.whyUseCoroutines() {
-    "Why use coroutines? My reasons".slide(Bullets.Numbers) {
-        "Avoid callbacks… and all their problems !"()
-        "Get back to the simplicity of sequential code"()
-        "Make saving resources easier"()
-        "Open new ways of programming"()
+    "Why use coroutines? My 3 reasons".slidesGroup(Bullets.Numbers) {
+        "Avoid callbacks".slide(
+            TextContentKind.BigFact,
+            subtitle = "Get back to the simplicity of sequential code"
+        )
+        //TODO[illustration]: messy XX linked together, on the start side,
+        // and show a clean, linear/sequential version on the end side.
+        "Make saving resources easier".slide()
+        "Open new ways of programming".slide()
     }
 }
 
@@ -88,7 +93,7 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             "How they work".slide {
                 "They are compiled to normal functions…"()
                 "that can be reentered multiple times…"()
-                "until done…"()
+                "until done, failed, or cancelled…"()
             }
             "Their hidden power: cancellation".slide {
                 "brought by kotlinx.coroutines"()
@@ -100,7 +105,10 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             "A coroutine is an instance of a suspendable computation"()
         }
         "How to start a coroutine?".slide(Bullets.Numbers) {
+            //TODO[illustration]: Add snippets that show correct ways of getting a scope
             "Get a CoroutineScope"()
+            //TODO[illustration]: Add 1 tangible snippet using launch
+            //TODO[illustration]: Add 1 tangible snippet using coroutineScope + async (example from SwissTransfer getting the name and size?)
             "Call `launch { … }` or `async { … }`"()
         }
         "How to stop a coroutine?".slide {
@@ -110,6 +118,6 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
                 "`raceOf(…)`"()
             }
         }
-        "TK".slide()
+        //TODO: TK?
     }
 }

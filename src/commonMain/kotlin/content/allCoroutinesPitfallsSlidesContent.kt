@@ -12,7 +12,10 @@ fun allCoroutinesPitfallsSlidesContent() = buildSlides {
     )
     getReady()
     coroutinesQuickIntro()
+    //TODO: Pitfalls != Mistakes
+    preliminaryAdvice()
     pitfalls()
+    mistakes() //Not exhaustive, and not too much in depth
     finalAdvice()
     //TODO: Add conclusion and/or outro
 }
@@ -32,6 +35,18 @@ private fun SlidesBuilder.getReady() {
         "Only 40 minutes"()
     }
 }
+
+private fun SlidesBuilder.preliminaryAdvice() = "Final advice".slide {
+    "📜 Before using anything" {
+        "READ ITS DOC 😉"()
+    }
+    "🛡️ Try making good software" {
+        "Reliability"()
+        "Efficiency"()
+        "Nice UX"()
+    }
+}
+
 
 private fun SlidesBuilder.finalAdvice() = "Final advice".slide {
     "📜 Before using anything" {

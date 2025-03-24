@@ -79,11 +79,12 @@ private fun mrbIntroSlides(): List<Slide> = listOf(
 
 private fun outroSlides(): List<Slide> = buildList {
     this += Slide(name = "outro") {
-        Image(
-            painter = painterResource(Res.drawable.qrcode_kdrive),
-//            contentScale = ContentScale.FillBounds,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
+        //TODO: Restore this somehow
+//        Image(
+//            painter = painterResource(Res.drawable.qrcode_kdrive),
+////            contentScale = ContentScale.FillBounds,
+//            contentDescription = null,
+//            modifier = Modifier.fillMaxSize()
+//        )
     }
 }
