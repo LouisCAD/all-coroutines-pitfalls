@@ -105,10 +105,10 @@ private fun SlidesBuilder.quickCoroutinesBasics() {
             "A coroutine is an instance of a suspendable computation"()
         }
         "How to start a coroutine?".slide(Bullets.Numbers) {
-            //TODO[illustration]: Add snippets that show correct ways of getting a scope
+            //TODO[snippet]: Add snippets that show correct ways of getting a scope
             "Get a CoroutineScope"()
-            //TODO[illustration]: Add 1 tangible snippet using launch
-            //TODO[illustration]: Add 1 tangible snippet using coroutineScope + async (example from SwissTransfer getting the name and size?)
+            //TODO[snippet]: Add 1 tangible snippet using launch
+            //TODO[snippet]: Add 1 tangible snippet using coroutineScope + async (example from SwissTransfer getting the name and size?)
             "Call `launch { … }` or `async { … }`"()
         }
         "How to stop a coroutine?".slide {
