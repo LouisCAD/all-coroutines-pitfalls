@@ -37,6 +37,8 @@ X things:
   - `CancellationException` that has to be rethrown
   - `async` and `await` aren't like in other languages
   - Misuse of `CoroutineScope`
+    - Passing a `CoroutineContext` that might have a `Job` inside
+      - Use launch + join instead
   - garbage collectable coroutines
   - throwing flows that then get shared (never do this)
   - surprising error propagation because of structured concurrency
@@ -52,6 +54,9 @@ X things:
   - CPU-intensive operations
   - Callback hell based APIs
 - Plain mistakes
+  - Improper bridging
+    - Not handling cancellation properly
+    - Not reporting Throwables properly 
   - Related to the programming model
     - Emitting mutable objects in a Flow
 
