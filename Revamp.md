@@ -62,5 +62,5 @@ X things:
 
 ## TODO
 
-- Create illustrations in Keynote, and add them here
+- Create illustrations in Keynote, and add them here?
 - Add the "It's a Trap" GIF (play it without loop, at least once in the presentation)

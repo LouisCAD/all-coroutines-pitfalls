@@ -118,7 +118,7 @@ private fun SlidesBuilder.pitfallsPartOne(title: String) = title.slidesGroup(
     "🤪 Making a messed-up CoroutineContext".slide {
         "Replacing the `Job` of a `CoroutineContext`"(Bullets) {
             "Disconnects the coroutine from the original hierarchy" {
-                "Breaks \"structured concurreny\""()
+                "Breaks \"structured concurrency\""()
                 "Silently **prevents cancellation propagation**"()
                 "Very very bad 👿 😵 💀"()
             }
