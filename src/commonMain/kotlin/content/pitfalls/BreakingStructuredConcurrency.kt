@@ -9,7 +9,12 @@ fun SlidesBuilder.breakingStructuredConcurrency() {
     "Jobless CoroutineScope".slide {
         ""()
     }
-    "Overwrite".slide()
+    "Overwritten Job".slide {
+        "It's like adding a branch that's not actually owned by the tree"()
+        "Consequences" {
+            "Cutting the parent/children relationship"()
+        }
+    }
 }
 
 private suspend fun doStuff() = coroutineScope {
