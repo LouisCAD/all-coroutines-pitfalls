@@ -2,7 +2,6 @@ package content
 
 import dsl.Disposition.Bullets
 import dsl.SlidesBuilder
-import pitfallsInKotlinxCoroutinesLib
 
 fun SlidesBuilder.pitfalls() {
     kindsOfPitfallsOverview(startCentered = true)
